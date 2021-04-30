@@ -27,10 +27,10 @@ const getOutput = (browserDir, outputDir = "dev") => {
 
 const getEntry = (sourceDir = "src") => {
     return {
-        popup: [path.resolve(__dirname, `${sourceDir}/popup/index.jsx`)],
-        options: [path.resolve(__dirname, `${sourceDir}/options/options.jsx`)],
-        content: [path.resolve(__dirname, `${sourceDir}/content/index.js`)],
-        background: [path.resolve(__dirname, `${sourceDir}/background/index.js`)],
+        popup: [path.resolve(__dirname, `${sourceDir}/popup/index.tsx`)],
+        options: [path.resolve(__dirname, `${sourceDir}/options/options.tsx`)],
+        content: [path.resolve(__dirname, `${sourceDir}/content/index.tsx`)],
+        background: [path.resolve(__dirname, `${sourceDir}/background/index.ts`)],
         hotreload: [path.resolve(__dirname, `${sourceDir}/utils/hot-reload.js`)],
     };
 };
@@ -99,6 +99,7 @@ const getResolves = () => {
             content: path.resolve(__dirname, "./src/content/"),
             assets: path.resolve(__dirname, "./src/assets/"),
             components: path.resolve(__dirname, "./src/components/"),
+            types: path.resolve(__dirname, "./src/types/"),
         },
         extensions: [".js", ".jsx", ".ts", ".tsx"],
     };

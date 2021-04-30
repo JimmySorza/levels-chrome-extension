@@ -1,7 +1,3 @@
-export const onRequest = (request) => {
-    if (request.action === "change-color") {
-        document.body.style.background = request.data.color;
-    }
-};
+export const onRequest = (request: any) => {};
 
 export default onRequest;

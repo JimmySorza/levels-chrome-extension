@@ -1,6 +1,5 @@
 import ext from "./ext";
-
-export type MSG_TYPE = "AUTH" | "COMMENT";
+import { MSG_TYPE } from "types";
 
 /**
  *

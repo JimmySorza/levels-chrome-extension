@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Popup from "./Popup.jsx";
+import Popup from "./Popup.js";
 
 const Index = () => <Popup />;
 

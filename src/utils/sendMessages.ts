@@ -1,5 +1,5 @@
 import ext from "./ext";
-import { MSG_TYPE } from "types";
+import { MSG_TYPE } from "types/index";
 
 /**
  *

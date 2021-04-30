@@ -9,7 +9,7 @@ ext.runtime.onMessage.addListener(MessageListener);
 export const Main = () => {
     return (
         <div className="my-extension">
-            <h1>{`Hello world - My first Extension`}</h1>
+            <h1>{`First Extension`}</h1>
         </div>
     );
 };

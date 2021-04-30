@@ -11,6 +11,8 @@
     },
     "author": "Jimmy Sorza",
     "dependencies": {
+        "@material-ui/core": "^4.11.4",
+        "@material-ui/icons": "^4.11.2",
         "@types/chrome": "^0.0.136",
         "@types/lodash": "^4.14.168",
         "@types/react": "^17.0.4",

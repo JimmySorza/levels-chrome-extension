@@ -16,6 +16,7 @@ export const sendMessage = async (msgType: MSG_TYPE, message: any): Promise<any>
     console.log("===== Sending Message => ", msg);
     return new Promise((resolve, reject) => {
         try {
+            // @ts-ignore
             ext.runtime.sendMessage(msg, (response: any) => {
                 resolve(response);
             });

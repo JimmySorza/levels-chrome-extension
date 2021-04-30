@@ -1,3 +1,4 @@
 import ext from "./ext";
 
-module.exports = ext.storage.sync ? ext.storage.sync : ext.storage.local;
+// @ts-ignore
+export default ext.storage.sync ? ext.storage.sync : ext.storage.local;

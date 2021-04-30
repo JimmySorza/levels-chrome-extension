@@ -11,6 +11,7 @@
     },
     "author": "Jimmy Sorza",
     "dependencies": {
+        "@types/chrome": "^0.0.136",
         "@types/lodash": "^4.14.168",
         "@types/react": "^17.0.4",
         "@types/react-dom": "^17.0.3",

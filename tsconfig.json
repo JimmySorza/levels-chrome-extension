@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "noImplicitThis": true,
+        "baseUrl": ".",
+        "module": "es6",
+        "target": "es5",
+        "allowJs": true,
+        "jsx": "react",
+        "allowSyntheticDefaultImports": true,
+        "paths": {
+            "utils/*": ["./src/utils/*"],
+            "popup/*": ["./src/popup/*"],
+            "background/*": ["./src/background/*"],
+            "options/*": ["./src/options/*"],
+            "content/*": ["./src/content/*"],
+            "assets/*": ["./src/assets/*"],
+            "components/*": ["./src/components/*"]
+        }
+    }
+}

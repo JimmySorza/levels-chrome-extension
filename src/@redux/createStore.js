@@ -49,4 +49,4 @@ export const createStoreInstance = (preloadedState = getInitialStateFromLocalSto
 
 const history = createBrowserHistory();
 
-export default store = createStoreInstance(undefined, history);
+export default createStoreInstance(undefined, history);

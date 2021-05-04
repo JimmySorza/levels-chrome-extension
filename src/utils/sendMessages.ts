@@ -1,4 +1,4 @@
-import ext from './ext';
+import { browser } from 'webextension-polyfill-ts';
 import { Message, Response } from 'types/index';
 
 /**
@@ -6,16 +6,18 @@ import { Message, Response } from 'types/index';
  * @param msg
  * @returns
  */
-export const sendMessage = async (msg: Message): Promise<Response> => {
+export const sendMessage = (msg: Message): Promise<Response> => {
     return new Promise((resolve, reject) => {
         try {
             // @ts-ignore
-            ext.runtime.sendMessage(msg, (response: Response) => {
+            browser.runtime.sendMessage(msg, (response: Response) => {
                 resolve(response);
             });
         } catch (e) {
             console.log('SendMessage Failed => ', e);
-            reject(e);
+            reject({
+                type: 'FAILED',
+            });
         }
     });
 };

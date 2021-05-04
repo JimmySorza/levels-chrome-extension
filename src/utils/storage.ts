@@ -1,4 +1,4 @@
-import ext from './ext';
+import { browser } from 'webextension-polyfill-ts';
 
 // @ts-ignore
-export default ext.storage.sync ? ext.storage.sync : ext.storage.local;
+export default browser.storage.sync ? browser.storage.sync : browser.storage.local;

@@ -8,6 +8,7 @@
         "target": "es5",
         "allowJs": true,
         "jsx": "react",
+        "moduleResolution": "node",
         "allowSyntheticDefaultImports": true,
         "paths": {
             "utils/*": ["./utils/*"],
@@ -19,7 +20,6 @@
             "components/*": ["./components/*"],
             "types/*": ["./types/*"],
             "@redux/*": ["./@redux/*"]
-        },
-        "moduleResolution": "node"
+        }
     }
 }

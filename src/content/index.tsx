@@ -4,11 +4,11 @@ import { Provider } from 'react-redux';
 
 import store from '@redux/createStore';
 
-import { ext } from 'utils';
+import { browser } from 'webextension-polyfill-ts';
 import MessageListener from './messageListener';
 
 // @ts-ignore
-ext.runtime.onMessage.addListener(MessageListener);
+browser.runtime.onMessage.addListener(MessageListener);
 
 export const Main = () => {
     return (

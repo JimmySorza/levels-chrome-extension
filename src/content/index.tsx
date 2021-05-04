@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ext from 'utils/ext';
+import { Provider } from 'react-redux';
+
+import store from '@redux/createStore';
+
+import { ext } from 'utils';
 import MessageListener from './messageListener';
 
 // @ts-ignore
@@ -8,9 +12,9 @@ ext.runtime.onMessage.addListener(MessageListener);
 
 export const Main = () => {
     return (
-        <div className="my-extension">
-            <h1>{`First Extension`}</h1>
-        </div>
+        <Provider store={store}>
+            <div className="my-extension"></div>
+        </Provider>
     );
 };
 

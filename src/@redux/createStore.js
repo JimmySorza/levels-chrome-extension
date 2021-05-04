@@ -1,15 +1,15 @@
 import { applyMiddleware, createStore } from 'redux';
-
 import { createPromise as createPromiseMiddleware } from 'redux-promise-middleware';
 import createThunkerMiddleware from 'redux-thunker';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { createBrowserHistory } from 'history';
 
 import createAppReducer from './rootReducer';
 import getInitialStateFromLocalStorage from './getInitialStateFromLocalStorage';
 
 import fetch from './@thunker/fetch';
 
-export default (preloadedState = getInitialStateFromLocalStorage(), history) => {
+export const createStoreInstance = (preloadedState = getInitialStateFromLocalStorage(), history) => {
     const isDev = process.env.NODE_ENV !== 'production';
 
     const promiseMiddleware = createPromiseMiddleware({
@@ -46,3 +46,7 @@ export default (preloadedState = getInitialStateFromLocalStorage(), history) => 
 
     return store;
 };
+
+const history = createBrowserHistory();
+
+export default store = createStoreInstance(undefined, history);

@@ -81,6 +81,7 @@ export const PageSignUp = (props: PageSignUpProps) => {
                                             required
                                             label="Password"
                                             fullWidth
+                                            type="password"
                                             name="password"
                                             value={values.password}
                                             onChange={handleChange}
@@ -93,6 +94,7 @@ export const PageSignUp = (props: PageSignUpProps) => {
                                             label="Password Confirm"
                                             fullWidth
                                             name="password_confirm"
+                                            type="password"
                                             value={values.password_confirm}
                                             onChange={handleChange}
                                             onBlur={handleBlur}

@@ -1,26 +1,20 @@
 import ext from './ext';
-import { MSG_TYPE } from 'types/index';
+import { Message, Response } from 'types/index';
 
 /**
  *
- * @param msgType
- * @param message
+ * @param msg
  * @returns
  */
-export const sendMessage = async (msgType: MSG_TYPE, message: any): Promise<any> => {
-    const msg = {
-        msgType,
-        ...message,
-    };
-    console.log('===== Sending Message => ', msg);
+export const sendMessage = async (msg: Message): Promise<Response> => {
     return new Promise((resolve, reject) => {
         try {
             // @ts-ignore
-            ext.runtime.sendMessage(msg, (response: any) => {
+            ext.runtime.sendMessage(msg, (response: Response) => {
                 resolve(response);
             });
         } catch (e) {
-            console.log(' SendMessage Failed => ', e);
+            console.log('SendMessage Failed => ', e);
             reject(e);
         }
     });

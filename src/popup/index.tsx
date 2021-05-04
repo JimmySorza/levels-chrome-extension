@@ -4,14 +4,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
 
-import { createStore } from '@redux';
+import store from '@redux/createStore';
 
 import Pages from './pages';
-
-const history = createBrowserHistory();
-const store = createStore(undefined, history);
 
 export const Main = () => {
     return (

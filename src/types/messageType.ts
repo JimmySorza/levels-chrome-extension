@@ -1,1 +1,1 @@
-export type MSG_TYPE = "AUTH" | "COMMENT";
+export type MSG_TYPE = 'AUTH' | 'COMMENT';

@@ -1,5 +1,5 @@
-import ext from "./ext";
-import { MSG_TYPE } from "types/index";
+import ext from './ext';
+import { MSG_TYPE } from 'types/index';
 
 /**
  *
@@ -12,7 +12,7 @@ export const sendMessage = async (msgType: MSG_TYPE, message: any): Promise<any>
         msgType,
         ...message,
     };
-    console.log("===== Sending Message => ", msg);
+    console.log('===== Sending Message => ', msg);
     return new Promise((resolve, reject) => {
         try {
             // @ts-ignore
@@ -20,7 +20,7 @@ export const sendMessage = async (msgType: MSG_TYPE, message: any): Promise<any>
                 resolve(response);
             });
         } catch (e) {
-            console.log(" SendMessage Failed => ", e);
+            console.log(' SendMessage Failed => ', e);
             reject(e);
         }
     });

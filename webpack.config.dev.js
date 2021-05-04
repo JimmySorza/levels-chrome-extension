@@ -1,4 +1,4 @@
-const ESLintPlugin = require("eslint-webpack-plugin");
+const ESLintPlugin = require('eslint-webpack-plugin');
 const {
     getHTMLPlugins,
     getOutput,
@@ -6,31 +6,32 @@ const {
     getFirefoxCopyPlugins,
     getEntry,
     getResolves,
-} = require("./webpack.utils");
+} = require('./webpack.utils');
+const webpack = require('webpack');
 
-const config = require("./config.json");
+const config = require('./config.json');
 
 const generalConfig = {
-    mode: "development",
-    devtool: "source-map",
+    mode: 'development',
+    devtool: 'source-map',
     module: {
         rules: [
             {
                 test: /\.(js|jsx|ts|tsx)$/,
-                use: "ts-loader",
+                use: 'ts-loader',
                 exclude: /node_modules/,
             },
             {
                 test: /\.scss$/,
                 use: [
                     {
-                        loader: "style-loader",
+                        loader: 'style-loader',
                     },
                     {
-                        loader: "css-loader",
+                        loader: 'css-loader',
                     },
                     {
-                        loader: "sass-loader",
+                        loader: 'sass-loader',
                     },
                 ],
             },
@@ -47,31 +48,40 @@ module.exports = [
     {
         ...generalConfig,
         entry: getEntry(config.chromePath),
-        output: getOutput("chrome", config.devDirectory),
+        output: getOutput('chrome', config.devDirectory),
         plugins: [
             new ESLintPlugin(eslintOptions),
-            ...getHTMLPlugins("chrome", config.devDirectory, config.chromePath),
-            ...getCopyPlugins("chrome", config.devDirectory, config.chromePath),
+            new webpack.DefinePlugin({
+                'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+            }),
+            ...getHTMLPlugins('chrome', config.devDirectory, config.chromePath),
+            ...getCopyPlugins('chrome', config.devDirectory, config.chromePath),
         ],
     },
     {
         ...generalConfig,
         entry: getEntry(config.operaPath),
-        output: getOutput("opera", config.devDirectory),
+        output: getOutput('opera', config.devDirectory),
         plugins: [
             new ESLintPlugin(eslintOptions),
-            ...getHTMLPlugins("opera", config.devDirectory, config.operaPath),
-            ...getCopyPlugins("opera", config.devDirectory, config.operaPath),
+            new webpack.DefinePlugin({
+                'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+            }),
+            ...getHTMLPlugins('opera', config.devDirectory, config.operaPath),
+            ...getCopyPlugins('opera', config.devDirectory, config.operaPath),
         ],
     },
     {
         ...generalConfig,
         entry: getEntry(config.firefoxPath),
-        output: getOutput("firefox", config.devDirectory),
+        output: getOutput('firefox', config.devDirectory),
         plugins: [
             new ESLintPlugin(eslintOptions),
-            ...getFirefoxCopyPlugins("firefox", config.devDirectory, config.firefoxPath),
-            ...getHTMLPlugins("firefox", config.devDirectory, config.firefoxPath),
+            new webpack.DefinePlugin({
+                'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+            }),
+            ...getFirefoxCopyPlugins('firefox', config.devDirectory, config.firefoxPath),
+            ...getHTMLPlugins('firefox', config.devDirectory, config.firefoxPath),
         ],
     },
 ];

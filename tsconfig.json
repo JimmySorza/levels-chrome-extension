@@ -3,21 +3,23 @@
         "noImplicitAny": true,
         "strictNullChecks": true,
         "noImplicitThis": true,
-        "baseUrl": ".",
+        "baseUrl": "./src",
         "module": "es6",
         "target": "es5",
         "allowJs": true,
         "jsx": "react",
         "allowSyntheticDefaultImports": true,
         "paths": {
-            "utils/*": ["./src/utils/*"],
-            "popup/*": ["./src/popup/*"],
-            "background/*": ["./src/background/*"],
-            "options/*": ["./src/options/*"],
-            "content/*": ["./src/content/*"],
-            "assets/*": ["./src/assets/*"],
-            "components/*": ["./src/components/*"],
-            "types/*": ["./src/types/*"]
-        }
+            "utils/*": ["./utils/*"],
+            "popup/*": ["./popup/*"],
+            "background/*": ["./background/*"],
+            "options/*": ["./options/*"],
+            "content/*": ["./content/*"],
+            "assets/*": ["./assets/*"],
+            "components/*": ["./components/*"],
+            "types/*": ["./types/*"],
+            "@redux/*": ["./@redux/*"]
+        },
+        "moduleResolution": "node"
     }
 }

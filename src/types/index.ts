@@ -1,1 +1,1 @@
-export * from "./messageType";
+export * from './messageType';

@@ -1,4 +1,4 @@
-import ext from "utils/ext";
+import ext from 'utils/ext';
 
 /**
  * Define content script functions
@@ -14,7 +14,7 @@ class Background {
      * @returns {void}
      */
     init = () => {
-        console.log("loaded Background Scripts");
+        console.log('loaded Background Scripts');
 
         //When extension installed
         // @ts-ignore

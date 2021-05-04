@@ -1,7 +1,28 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import Popup from "./Popup";
+/* global document */
 
-const Index = () => <Popup />;
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 
-ReactDOM.render(<Index />, document.getElementById("display-container"));
+import { createStore } from '@redux';
+
+import Pages from './pages';
+
+const history = createBrowserHistory();
+const store = createStore(undefined, history);
+
+export const Main = () => {
+    return (
+        <Provider store={store}>
+            <BrowserRouter>
+                <div>
+                    <Pages />
+                </div>
+            </BrowserRouter>
+        </Provider>
+    );
+};
+
+ReactDOM.render(<Main />, document.getElementById('root'));

@@ -1,31 +1,31 @@
 const apis = [
-    "alarms",
-    "bookmarks",
-    "browserAction",
-    "commands",
-    "contextMenus",
-    "cookies",
-    "downloads",
-    "events",
-    "extension",
-    "extensionTypes",
-    "history",
-    "i18n",
-    "idle",
-    "notifications",
-    "pageAction",
-    "runtime",
-    "storage",
-    "tabs",
-    "webNavigation",
-    "webRequest",
-    "windows",
+    'alarms',
+    'bookmarks',
+    'browserAction',
+    'commands',
+    'contextMenus',
+    'cookies',
+    'downloads',
+    'events',
+    'extension',
+    'extensionTypes',
+    'history',
+    'i18n',
+    'idle',
+    'notifications',
+    'pageAction',
+    'runtime',
+    'storage',
+    'tabs',
+    'webNavigation',
+    'webRequest',
+    'windows',
 ] as const;
 
 export type API_TYPE = typeof apis[number];
 
 type ExtensionType = {
-    [key in API_TYPE]: Function;
+    [key in API_TYPE]: () => any;
 };
 
 /* tslint:disable */

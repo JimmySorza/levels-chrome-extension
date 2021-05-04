@@ -14,7 +14,10 @@
     },
     "plugins": ["@typescript-eslint", "prettier"],
     "rules": {
-        "prettier/prettier": "error"
+        "react/prop-types": [1],
+        "prettier/prettier": [2],
+        "@typescript-eslint/ban-ts-comment": [0],
+        "@typescript-eslint/no-explicit-any": [1]
     },
     "extends": ["plugin:react/recommended", "plugin:@typescript-eslint/recommended", "plugin:prettier/recommended"]
 }

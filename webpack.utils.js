@@ -1,31 +1,31 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
-const ZipPlugin = require("zip-webpack-plugin");
-const path = require("path");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ZipPlugin = require('zip-webpack-plugin');
+const path = require('path');
 
-const getHTMLPlugins = (browserDir, outputDir = "dev", sourceDir = "src") => [
+const getHTMLPlugins = (browserDir, outputDir = 'dev', sourceDir = 'src') => [
     new HtmlWebpackPlugin({
-        title: "Popup",
+        title: 'Popup',
         filename: path.resolve(__dirname, `${outputDir}/${browserDir}/popup/index.html`),
         template: `${sourceDir}/popup/index.html`,
-        chunks: ["popup"],
+        chunks: ['popup'],
     }),
     new HtmlWebpackPlugin({
-        title: "Options",
+        title: 'Options',
         filename: path.resolve(__dirname, `${outputDir}/${browserDir}/options/index.html`),
         template: `${sourceDir}/options/index.html`,
-        chunks: ["options"],
+        chunks: ['options'],
     }),
 ];
 
-const getOutput = (browserDir, outputDir = "dev") => {
+const getOutput = (browserDir, outputDir = 'dev') => {
     return {
         path: path.resolve(process.cwd(), `${outputDir}/${browserDir}`),
-        filename: "[name]/[name].js",
+        filename: '[name]/[name].js',
     };
 };
 
-const getEntry = (sourceDir = "src") => {
+const getEntry = (sourceDir = 'src') => {
     return {
         popup: [path.resolve(__dirname, `${sourceDir}/popup/index.tsx`)],
         options: [path.resolve(__dirname, `${sourceDir}/options/options.tsx`)],
@@ -35,7 +35,7 @@ const getEntry = (sourceDir = "src") => {
     };
 };
 
-const getCopyPlugins = (browserDir, outputDir = "dev", sourceDir = "src") => [
+const getCopyPlugins = (browserDir, outputDir = 'dev', sourceDir = 'src') => [
     new CopyWebpackPlugin({
         patterns: [
             {
@@ -54,7 +54,7 @@ const getCopyPlugins = (browserDir, outputDir = "dev", sourceDir = "src") => [
     }),
 ];
 
-const getFirefoxCopyPlugins = (browserDir, outputDir = "dev", sourceDir = "src") => [
+const getFirefoxCopyPlugins = (browserDir, outputDir = 'dev', sourceDir = 'src') => [
     new CopyWebpackPlugin({
         patterns: [
             {
@@ -73,11 +73,11 @@ const getFirefoxCopyPlugins = (browserDir, outputDir = "dev", sourceDir = "src")
     }),
 ];
 
-const getZipPlugin = (browserDir, outputDir = "dist") =>
+const getZipPlugin = (browserDir, outputDir = 'dist') =>
     new ZipPlugin({
         path: path.resolve(__dirname, `${outputDir}/${browserDir}`),
         filename: browserDir,
-        extension: "zip",
+        extension: 'zip',
         fileOptions: {
             mtime: new Date(),
             mode: 0o100664,
@@ -92,16 +92,17 @@ const getZipPlugin = (browserDir, outputDir = "dist") =>
 const getResolves = () => {
     return {
         alias: {
-            utils: path.resolve(__dirname, "./src/utils/"),
-            popup: path.resolve(__dirname, "./src/popup/"),
-            background: path.resolve(__dirname, "./src/background/"),
-            options: path.resolve(__dirname, "./src/options/"),
-            content: path.resolve(__dirname, "./src/content/"),
-            assets: path.resolve(__dirname, "./src/assets/"),
-            components: path.resolve(__dirname, "./src/components/"),
-            types: path.resolve(__dirname, "./src/types/"),
+            utils: path.resolve(__dirname, './src/utils/'),
+            popup: path.resolve(__dirname, './src/popup/'),
+            background: path.resolve(__dirname, './src/background/'),
+            options: path.resolve(__dirname, './src/options/'),
+            content: path.resolve(__dirname, './src/content/'),
+            assets: path.resolve(__dirname, './src/assets/'),
+            components: path.resolve(__dirname, './src/components/'),
+            types: path.resolve(__dirname, './src/types/'),
+            '@redux': path.resolve(__dirname, './src/@redux/'),
         },
-        extensions: [".js", ".jsx", ".ts", ".tsx"],
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
     };
 };
 

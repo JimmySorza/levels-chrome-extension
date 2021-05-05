@@ -22,9 +22,6 @@ class Background {
         //Add message listener in Browser.
         // @ts-ignore
         browser.runtime.onMessage.addListener(this.onMessage);
-
-        //Add page action listener in browser
-        browser.pageAction.onClicked.addListener(this.onClickedExtension);
     };
 
     //TODO: Listeners
@@ -47,17 +44,12 @@ class Background {
     onMessage = (message: Message, sender: Runtime.MessageSender, reply: Function) => {
         console.log('[=====Received Message=====]', sender, message);
         switch (message.type) {
+            case 'ACTIVE_PAGE_ACTION': {
+                browser.pageAction.show(sender.tab?.id || 0);
+                break;
+            }
         }
         return true;
-    };
-
-    /**
-     * Show popup page
-     *
-     * @param tab
-     */
-    onClickedExtension = (tab: Tabs.Tab) => {
-        browser.pageAction.show(tab.id as number);
     };
 
     /**

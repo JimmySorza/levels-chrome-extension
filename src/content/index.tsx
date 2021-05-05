@@ -6,15 +6,19 @@ import store from '@redux/createStore';
 
 import { browser } from 'webextension-polyfill-ts';
 import MessageListener from './messageListener';
+import { sendMessage } from 'utils';
 
 // @ts-ignore
 browser.runtime.onMessage.addListener(MessageListener);
 
 export const Main = () => {
+    React.useEffect(() => {
+        sendMessage({ type: 'ACTIVE_PAGE_ACTION' });
+    }, []);
     return (
-        <Provider store={store}>
-            <div className="my-extension"></div>
-        </Provider>
+        // <Provider store={store}>
+        <div className="my-extension"></div>
+        // </Provider>
     );
 };
 

@@ -1,8 +1,8 @@
-import { browser } from 'webextension-polyfill-ts';
+import { Message } from 'types/message';
+import { browser, Runtime, Tabs } from 'webextension-polyfill-ts';
 
 /**
- * Define content script functions
- * @type {class}
+ * Define Background script functions
  */
 class Background {
     constructor() {
@@ -14,160 +14,63 @@ class Background {
      * @returns {void}
      */
     init = () => {
-        console.log('loaded Background Scripts');
+        console.log('[=====Loaded Background Scripts=====]');
 
         //When extension installed
-        // @ts-ignore
-        // browser.runtime.onInstalled.addListener(() => this.onInstalled());
+        browser.runtime.onInstalled.addListener(this.onInstalled);
 
         //Add message listener in Browser.
         // @ts-ignore
-        // browser.runtime.onMessage.addListener((message, sender, reply) => this.onMessage(message, sender, reply));
+        browser.runtime.onMessage.addListener(this.onMessage);
 
-        //Add message listener from Extension
-        // @ts-ignore
-        // browser.extension.onConnect.addListener((port) => this.onConnect(port));
-
-        //Add Update listener for tab
-        // @ts-ignore
-        // browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => this.onUpdatedTab(tabId, changeInfo, tab));
-
-        //Add New tab create listener
-        // @ts-ignore
-        // browser.tabs.onCreated.addListener((tab) => this.onCreatedTab(tab));
+        //Add page action listener in browser
+        browser.pageAction.onClicked.addListener(this.onClickedExtension);
     };
 
-    // //TODO: Listeners
+    //TODO: Listeners
 
-    // /**
-    //  * Extension Installed
-    //  */
-    // onInstalled = () => {
-    //     console.log("~~~~~Installed Extension!");
-    // };
+    /**
+     * Extension Installed
+     */
+    onInstalled = () => {
+        console.log('[=====Installed Levels Extension=====]');
+    };
 
-    // /**
-    //  * Message Handler Function
-    //  *
-    //  * @param { object } message
-    //  * @param { object } sender
-    //  * @param { object } reply
-    //  */
-    // onMessage = (message, sender, reply) => {
-    //     console.log("~~~~~Received message", message);
-    //     switch (message.type) {
-    //     }
-    //     return true;
-    // };
+    /**
+     * Message Handler Function from content script and popup page
+     *
+     * @param message
+     * @param sender
+     * @param reply
+     * @returns
+     */
+    onMessage = (message: Message, sender: Runtime.MessageSender, reply: Function) => {
+        console.log('[=====Received Message=====]', sender, message);
+        switch (message.type) {
+        }
+        return true;
+    };
 
-    // /**
-    //  * Connect with Extension
-    //  *
-    //  * @param {*} port
-    //  */
-    // onConnect = (port) => {
-    //     this._port = port;
-    //     console.log("~~~~~Connected .....");
-    //     this._port.onMessage.addListener((msg) => this.onMessageFromExtension(msg));
-    // };
+    /**
+     * Show popup page
+     *
+     * @param tab
+     */
+    onClickedExtension = (tab: Tabs.Tab) => {
+        browser.pageAction.show(tab.id as number);
+    };
 
-    // /**
-    //  * Message from Extension
-    //  *
-    //  * @param {*} msg
-    //  */
-    // onMessageFromExtension = (msg) => {
-    //     console.log("~~~~Recieved message from Popup:" + msg);
-    // };
-
-    // /**
-    //  *
-    //  * @param {object} tab
-    //  */
-    // onCreatedTab = (tab) => {
-    //     console.log("~~~~~Created new tab", tab);
-    // };
-
-    // /**
-    //  * When changes tabs
-    //  *
-    //  * @param {*} tabId
-    //  * @param {*} changeInfo
-    //  * @param {*} tab
-    //  */
-    // onUpdatedTab = (tabId, changeInfo, tab) => {
-    //     console.log("~~~~~Changed tab", tabId);
-    // };
-
-    // /**
-    //  * get url from tab
-    //  * @param {number} tabid
-    //  */
-    // getURLFromTab = (tabid) => {
-    //     return new Promise(function (resolve, reject) {
-    //         browser.tabs.get(tabid, function (tab) {
-    //             resolve(tab.url ? tab.url : "");
-    //         });
-    //     });
-    // };
-
-    // /**
-    //  * open new tab
-    //  *
-    //  * @param {string} url
-    //  */
-    // openNewTab = (url) => {
-    //     return new Promise((resolve, reject) =>
-    //         browser.tabs.create({ url }, function (tab) {
-    //             resolve(tab);
-    //         })
-    //     );
-    // };
-
-    // /**
-    //  * Close specific tab
-    //  * @param {} tab
-    //  */
-    // closeTab = (tab) => {
-    //     return new Promise((resolve, reject) =>
-    //         browser.tabs.remove(tab.id, () => {
-    //             resolve();
-    //         })
-    //     );
-    // };
-
-    // /**
-    //  * Update Tab
-    //  */
-    // updateTab = (tab, options) => {
-    //     return new Promise((resolve, reject) => {
-    //         browser.tabs.update(tab.id, options, function (updateTab) {
-    //             resolve(updateTab);
-    //         });
-    //     });
-    // };
-
-    // /**
-    //  * Get info from tabId
-    //  */
-    // getTab = (tab) => {
-    //     return new Promise((resolve) => {
-    //         browser.tabs.get(tab.id, function (newTab) {
-    //             resolve(newTab);
-    //         });
-    //     });
-    // };
-
-    // /**
-    //  * send message
-    //  */
-    // sendMessage = (tab, msg) => {
-    //     return new Promise((resolve, reject) =>
-    //         browser.tabs.sendMessage(tab.id, msg, function (response) {
-    //             resolve(response);
-    //         })
-    //     );
-    // };
+    /**
+     * send message
+     */
+    sendMessage = (tab: Tabs.Tab, msg: Message) => {
+        return new Promise((resolve, reject) =>
+            // @ts-ignore
+            browser.tabs.sendMessage(tab.id as number, msg, (response: Message) => {
+                resolve(response);
+            })
+        );
+    };
 }
 
 export const background = new Background();

@@ -10,18 +10,18 @@
     "default_locale": "en",
     "content_scripts": [
         {
-            "matches": ["http://*/*", "https://*/*"],
+            "matches": ["http://*.notion.so/*", "https://*.notion.so/*"],
             "js": ["content/content.js"]
         }
     ],
     "background": {
         "scripts": ["background/background.js"]
     },
-    "permissions": ["tabs", "storage", "http://*/*", "https://*/*"],
+    "permissions": ["tabs", "storage", "http://*.notion.so/*", "https://*.notion.so/*"],
     "options_ui": {
         "page": "options/index.html"
     },
-    "browser_action": {
+    "page_action": {
         "default_icon": {
             "19": "assets/icons/icon-19.png",
             "38": "assets/icons/icon-38.png"

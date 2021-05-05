@@ -1,16 +1,23 @@
-export function createLocalStorageAccess<State>(storageProp: string) {
-    const propId = `levels___${storageProp}`;
+import { StorageKey } from 'types';
+
+/**
+ * Storage
+ *
+ * @param storageKey
+ * @returns
+ */
+export function createLocalStorageAccess<State>(storageKey: StorageKey) {
     return {
         clear: async () => {
-            localStorage.removeItem(propId);
+            localStorage.removeItem(storageKey);
         },
         get: (): State => {
-            const dataLocal = localStorage.getItem(propId);
+            const dataLocal = localStorage.getItem(storageKey);
             return dataLocal ? JSON.parse(dataLocal) : {};
         },
         set: (data: State) => {
             localStorage.setItem(
-                propId,
+                storageKey,
                 JSON.stringify({
                     storage: {
                         updated_at: new Date().toISOString(),

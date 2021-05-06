@@ -1,13 +1,17 @@
-import { createFlushReducer, composeReducers, createGetReducer } from '../@reducers';
+import { UserAction } from './actions';
 import initialState from './initialState';
-import enhaceLocalStorage from '../enhanceReducerWithWriteLocalStorage';
 
-const NAME = '@user';
-
-// reducers
-const getReducer = createGetReducer(NAME, initialState);
-const flushReducer = createFlushReducer(NAME, initialState.data);
-
-export const userReducer = composeReducers(initialState)(getReducer, flushReducer as any);
-
-export default userReducer;
+export default (state = initialState, action: UserAction) => {
+    let nextState = {};
+    switch (action.type) {
+        case 'GET_USER':
+            nextState = {
+                ...state,
+                ...action.payload,
+            };
+            break;
+        default:
+            nextState = state;
+    }
+    return nextState;
+};

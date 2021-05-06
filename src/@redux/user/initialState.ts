@@ -1,7 +1,5 @@
-import { UserState } from './types';
+import { User } from 'types';
 
-const initialState: UserState = {
-    data: {},
-};
+const initialState: User = {};
 
 export default initialState;

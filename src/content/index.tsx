@@ -11,6 +11,7 @@ import Main from './Main';
 import { sendMessage } from 'utils';
 
 const store = new Store();
+
 const App = () => {
     React.useEffect(() => {
         sendMessage({ type: 'ACTIVE_PAGE_ACTION' });
@@ -36,5 +37,6 @@ app.id = 'my-extension-root';
 document.body.appendChild(app);
 
 store.ready().then(() => {
+    console.log('ready', store);
     ReactDOM.render(<App />, app);
 });

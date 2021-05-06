@@ -1,9 +1,17 @@
-import { ExtraArguments } from '@redux/@reducers/types';
+import { Dispatch } from 'react';
+import { User } from 'types';
+import { localStorage } from 'utils';
 
-export const get = () => ({ sendMessage, localStorage }: ExtraArguments) => {
-    console.log('~~~~~~ user dat', localStorage('ajs_user_traits').get());
-    return {
-        type: '@user/GET',
-        payload: localStorage('ajs_user_traits').get(),
-    };
+export type UserAction = {
+    type: ActionType;
+    payload?: User;
+};
+
+export type ActionType = 'GET_USER';
+
+export const get = (dispatch: Dispatch<UserAction>) => {
+    return dispatch({
+        type: 'GET_USER',
+        payload: localStorage('ajs_user_traits').get() as User,
+    });
 };

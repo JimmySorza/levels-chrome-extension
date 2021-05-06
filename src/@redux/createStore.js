@@ -1,45 +1,10 @@
-import { applyMiddleware, createStore } from 'redux';
-import { createPromise as createPromiseMiddleware } from 'redux-promise-middleware';
-import createThunkerMiddleware from 'redux-thunker';
-import { composeWithDevTools } from 'redux-devtools-extension';
-
+import { createStore } from 'redux';
 import createAppReducer from './rootReducer';
-import getInitialStateFromLocalStorage from './getInitialStateFromLocalStorage';
 
-import { sendMessage, localStorage } from './@thunker';
-
-export const createStoreInstance = (preloadedState = getInitialStateFromLocalStorage()) => {
-    const isDev = process.env.NODE_ENV !== 'production';
-
-    const promiseMiddleware = createPromiseMiddleware({
-        promiseTypeSuffixes: ['START', 'SUCCESS', 'ERROR'],
-    });
-
-    const thunkerMiddleware = createThunkerMiddleware({
-        config: {
-            reduxThunkCompatible: false,
-            continuous: true,
-        },
-        extraArgumentsEnhanced: {
-            sendMessage,
-            localStorage,
-        },
-    });
-
-    const middleware = [thunkerMiddleware, promiseMiddleware];
-
-    if (isDev) {
-        // Add Redux Logger
-        const createLogger = require('redux-logger').createLogger; // eslint-disable-line
-        const logger = createLogger({
-            collapsed: true,
-        });
-        middleware.push(logger);
-    }
-
+export const createStoreInstance = (preloadedState) => {
     const appReducer = createAppReducer(preloadedState);
 
-    const store = createStore(appReducer, preloadedState, composeWithDevTools(applyMiddleware(...middleware)));
+    const store = createStore(appReducer, preloadedState);
 
     return store;
 };

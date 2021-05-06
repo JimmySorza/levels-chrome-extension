@@ -1,12 +1,16 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { get as getUser } from '@redux/user/actions';
+import { useDispatch, useStore, connect } from 'react-redux';
+import { get, get as getUser } from '@redux/user/actions';
+import { useRedux } from '@redux';
 
 const Main = () => {
-    const d = useDispatch();
+    const store = useStore();
+
+    const userSate = useRedux('user');
+    console.log('~~~~ userstate', userSate);
 
     React.useEffect(() => {
-        d(getUser());
+        get(store.dispatch);
     }, []);
 
     return <div></div>;

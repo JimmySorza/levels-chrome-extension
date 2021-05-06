@@ -1,5 +1,10 @@
 import { Message } from 'types/message';
 import { browser, Runtime, Tabs } from 'webextension-polyfill-ts';
+import { wrapStore } from 'webext-redux';
+
+import store from '@redux/createStore';
+
+wrapStore(store);
 
 /**
  * Define Background script functions

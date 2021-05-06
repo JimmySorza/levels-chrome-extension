@@ -2,14 +2,13 @@ import { applyMiddleware, createStore } from 'redux';
 import { createPromise as createPromiseMiddleware } from 'redux-promise-middleware';
 import createThunkerMiddleware from 'redux-thunker';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { createBrowserHistory } from 'history';
 
 import createAppReducer from './rootReducer';
 import getInitialStateFromLocalStorage from './getInitialStateFromLocalStorage';
 
-import fetch from './@thunker/fetch';
+import { sendMessage, localStorage } from './@thunker';
 
-export const createStoreInstance = (preloadedState = getInitialStateFromLocalStorage(), history) => {
+export const createStoreInstance = (preloadedState = getInitialStateFromLocalStorage()) => {
     const isDev = process.env.NODE_ENV !== 'production';
 
     const promiseMiddleware = createPromiseMiddleware({
@@ -22,10 +21,8 @@ export const createStoreInstance = (preloadedState = getInitialStateFromLocalSto
             continuous: true,
         },
         extraArgumentsEnhanced: {
-            fetch,
-        },
-        extraArguments: {
-            history,
+            sendMessage,
+            localStorage,
         },
     });
 
@@ -40,13 +37,11 @@ export const createStoreInstance = (preloadedState = getInitialStateFromLocalSto
         middleware.push(logger);
     }
 
-    const appReducer = createAppReducer(preloadedState, history);
+    const appReducer = createAppReducer(preloadedState);
 
     const store = createStore(appReducer, preloadedState, composeWithDevTools(applyMiddleware(...middleware)));
 
     return store;
 };
 
-const history = createBrowserHistory();
-
-export default createStoreInstance(undefined, history);
+export default createStoreInstance(undefined);

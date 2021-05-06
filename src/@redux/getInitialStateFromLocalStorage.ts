@@ -16,4 +16,8 @@ const initReducerState = {
 
 export default () => ({
     ...initialState,
+    user: {
+        ...initialState.user,
+        ...initReducerState,
+    },
 });

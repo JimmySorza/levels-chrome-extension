@@ -6,7 +6,7 @@ import { AppState } from '@redux';
  * @param baseName
  * @param initialDataState
  */
-export const createFlushReducer = (baseName: string, initialDataState: any) => (state: AppState, action: any) => {
+export const createFlushReducer = <T>(baseName: string, initialDataState: T) => (state: AppState, action: any) => {
     switch (action.type) {
         case `${baseName}/FLUSH`:
             return {

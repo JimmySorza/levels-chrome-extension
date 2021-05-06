@@ -1,3 +1,5 @@
+import { sendMessage, localStorage } from 'utils';
+
 export type Pagination = {
     current_page?: number;
     from?: number;
@@ -33,4 +35,9 @@ export type ResponseWithPagination<DataType> = Pagination & {
 export type DataWithPagination<Data> = {
     data: Data;
     pagination?: Pagination;
+};
+
+export type ExtraArguments = {
+    sendMessage: typeof sendMessage;
+    localStorage: typeof localStorage;
 };

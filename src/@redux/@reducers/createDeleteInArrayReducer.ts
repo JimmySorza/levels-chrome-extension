@@ -32,6 +32,7 @@ export function createDeleteInArrayReducer<D extends { id: Identity }>(
                     isDeleting: false,
                     data: flushOnError ? initialState.data : state.data,
                 };
+            case `${baseName}/DELETE`:
             case `${baseName}/DELETE_SUCCESS`: {
                 return {
                     ...state,

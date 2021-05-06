@@ -31,6 +31,7 @@ export function createUpdateReducer<D>(
                     isDeleting: false,
                     data: flushOnError ? initialState.data : state.data,
                 };
+            case `${baseName}/UPDATE`:
             case `${baseName}/UPDATE_SUCCESS`: {
                 return {
                     ...state,

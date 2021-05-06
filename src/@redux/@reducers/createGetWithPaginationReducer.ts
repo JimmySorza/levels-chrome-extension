@@ -39,6 +39,7 @@ export function createGetWithPaginationReducer<D>(
                     isLoading: false,
                     data: flushOnError ? initialState.data : state.data,
                 };
+            case `${baseName}/GET`:
             case `${baseName}/GET_SUCCESS`: {
                 const { data, ...pagination } = action.payload;
                 return {

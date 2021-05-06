@@ -30,6 +30,7 @@ export function createDeleteReducer<D>(
                     isDeleting: false,
                     data: flushOnError ? initialState.data : state.data,
                 };
+            case `${baseName}/DELETE`:
             case `${baseName}/DELETE_SUCCESS`: {
                 return {
                     ...state,

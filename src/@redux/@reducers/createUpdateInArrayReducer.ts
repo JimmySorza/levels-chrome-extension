@@ -31,6 +31,7 @@ export function createUpdateInArrayReducer<DataType extends { id: Identity }>(
                     isUpdating: false,
                     data: flushOnError ? initialState.data : state.data,
                 };
+            case `${baseName}/UPDATE`:
             case `${baseName}/UPDATE_SUCCESS`: {
                 const payloadData = action.payload;
                 delete payloadData['snack'];

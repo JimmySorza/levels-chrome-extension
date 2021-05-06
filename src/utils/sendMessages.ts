@@ -1,7 +1,8 @@
-import { browser, Runtime } from 'webextension-polyfill-ts';
+import { browser, Runtime, Tabs } from 'webextension-polyfill-ts';
 import { Message, Response } from 'types';
 
 /**
+ * Send Message to Background Script
  *
  * @param msg
  * @returns
@@ -10,4 +11,9 @@ export const sendMessage = (msg: Message, options?: Runtime.SendMessageOptionsTy
     return browser.runtime.sendMessage(msg, options);
 };
 
-export default sendMessage;
+/**
+ * Send Message to Content Script
+ */
+export const sendMessageWithTab = (tab: Tabs.Tab, msg: Message, options?: Tabs.SendMessageOptionsType) => {
+    return browser.tabs.sendMessage(tab.id as number, msg, options);
+};

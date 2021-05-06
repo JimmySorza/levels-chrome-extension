@@ -30,6 +30,7 @@ export function createCreateInArrayReducer<D>(
                     isCreating: false,
                     data: flushOnError ? initialState.data : state.data,
                 };
+            case `${baseName}/CREATE`:
             case `${baseName}/CREATE_SUCCESS`: {
                 const newCreate = !Array.isArray(action.payload) ? [action.payload] : action.payload;
                 return {

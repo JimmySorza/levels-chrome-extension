@@ -28,6 +28,7 @@ export function createGetReducer<D>(baseName: string, initialState: DefaultState
                     isLoading: false,
                     data: flushOnError ? initialState.data : state.data,
                 };
+            case `${baseName}/GET`:
             case `${baseName}/GET_SUCCESS`:
                 return {
                     ...state,

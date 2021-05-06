@@ -1,13 +1,11 @@
 import React from 'react';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Container, TextField, Typography, Divider, Grid } from '@material-ui/core';
+import { RouteComponentProps } from 'react-router-dom';
+import { Container, Typography, Divider } from '@material-ui/core';
 import { spacing } from '@material-ui/system';
 import { styled } from '@material-ui/core/styles';
 import MuiButton from '@material-ui/core/Button';
-import { Formik } from 'formik';
 
 import { Box } from 'components';
-import SignInSchema from './validateSignIn';
 
 const Button = styled(MuiButton)(spacing);
 
@@ -20,14 +18,8 @@ export const PageSignIn = (props: PageSignInProps) => {
         history,
     } = props;
 
-    const initialValues = {
-        email: '',
-        password: '',
-    };
-
-    const handleSignIn = (values: typeof initialValues) => {
-        console.log('values', values);
-        history.push('/app/home');
+    const handleClickSignIn = () => {
+        window.open('https://www.notion.so/login');
     };
 
     return (
@@ -41,52 +33,9 @@ export const PageSignIn = (props: PageSignInProps) => {
                     <Typography align="center" variant="h6">
                         Sign In
                     </Typography>
-                    <Formik initialValues={initialValues} validationSchema={SignInSchema} onSubmit={handleSignIn}>
-                        {({ errors, touched, handleChange, handleSubmit, values, handleBlur, setErrors }) => {
-                            return (
-                                <form autoComplete="off">
-                                    <TextField
-                                        required
-                                        label="Email"
-                                        fullWidth
-                                        name="email"
-                                        value={values.email}
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        error={Boolean(touched['email'] && errors['email'])}
-                                        helperText={errors['email']}
-                                    />
-                                    <TextField
-                                        required
-                                        type="password"
-                                        label="Password"
-                                        fullWidth
-                                        name="password"
-                                        value={values.password}
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        error={Boolean(touched['password'] && errors['password'])}
-                                        helperText={errors['password']}
-                                    />
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        fullWidth
-                                        mt={1}
-                                        onClick={() => handleSubmit()}
-                                    >
-                                        Sing In
-                                    </Button>
-                                    <Box py={1}>
-                                        <Grid container direction="row" justify="space-between" alignItems="center">
-                                            <Link to="/auth/forget-password">Forget Password?</Link>
-                                            <Link to="/auth/sign-up">Sign Up</Link>
-                                        </Grid>
-                                    </Box>
-                                </form>
-                            );
-                        }}
-                    </Formik>
+                    <Button variant="contained" color="primary" fullWidth mt={1} onClick={handleClickSignIn}>
+                        Sing In
+                    </Button>
                 </Box>
             </Container>
         </Box>

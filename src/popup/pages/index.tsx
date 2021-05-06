@@ -10,13 +10,12 @@ import Auth from './Auth';
 
 const Pages = () => {
     const userState = useRedux('user');
-    console.log('~~~~~~ userState', userState);
 
     return (
         <Switch>
             <Route component={Auth} path="/auth" />
             <Route component={Dashboard} path="/app" />
-            <Redirect to="/auth" />
+            <Redirect to={userState.user_id ? '/app' : '/auth'} />
         </Switch>
     );
 };

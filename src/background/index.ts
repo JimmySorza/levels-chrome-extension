@@ -1,5 +1,5 @@
 import { Message } from 'types/message';
-import { browser, Runtime, Tabs } from 'webextension-polyfill-ts';
+import { browser, Runtime, Tabs, WebNavigation } from 'webextension-polyfill-ts';
 import { wrapStore } from 'webext-redux';
 
 import store from '@redux/createStore';
@@ -27,6 +27,8 @@ class Background {
         //Add message listener in Browser.
         // @ts-ignore
         browser.runtime.onMessage.addListener(this.onMessage);
+
+        browser.webNavigation.onHistoryStateUpdated.addListener(this.onHistoryStateUpdated);
     };
 
     //TODO: Listeners
@@ -55,6 +57,12 @@ class Background {
             }
         }
         return true;
+    };
+
+    onHistoryStateUpdated = (details: WebNavigation.OnHistoryStateUpdatedDetailsType) => {
+        if (details.url.indexOf('notion.so') >= 0) {
+            browser.tabs.executeScript(details.tabId, { file: 'content/content.js', runAt: 'document_end' });
+        }
     };
 
     /**

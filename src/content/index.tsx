@@ -1,16 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import { browser } from 'webextension-polyfill-ts';
 import MessageListener from './messageListener';
 
-import { Provider } from 'react-redux';
-
-import { Store } from 'webext-redux';
+import { getStore } from './store';
 import Main from './Main';
+import { setupStorageListener } from './storage';
 
 import { sendMessage } from 'utils';
+import { initStore } from './initStore';
 
-const store = new Store();
+const store = getStore();
 
 const App = () => {
     React.useEffect(() => {
@@ -23,6 +24,12 @@ const App = () => {
         </Provider>
     );
 };
+
+initStore();
+/**
+ * Setup Storage Listener
+ */
+setupStorageListener();
 
 /**
  * Set up Message Listener
@@ -37,6 +44,5 @@ app.id = 'my-extension-root';
 document.body.appendChild(app);
 
 store.ready().then(() => {
-    console.log('ready', store);
     ReactDOM.render(<App />, app);
 });

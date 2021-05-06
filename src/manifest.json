@@ -14,14 +14,15 @@
     "content_scripts": [
         {
             "matches": ["http://*.notion.so/*", "https://*.notion.so/*"],
-            "js": ["content/content.js"]
+            "js": ["content/content.js"],
+            "run_at": "document_end"
         }
     ],
     "background": {
         "scripts": ["background/background.js", "hotreload/hotreload.js"],
         "persistent": true
     },
-    "permissions": ["tabs", "storage", "http://*.notion.so/*", "https://*.notion.so/*"],
+    "permissions": ["webNavigation", "http://*.notion.so/*", "https://*.notion.so/*"],
     "options_ui": {
         "page": "options/index.html"
     },

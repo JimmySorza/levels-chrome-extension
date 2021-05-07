@@ -4,12 +4,13 @@
 import { browser } from 'webextension-polyfill-ts';
 import jquery from 'jquery';
 
-import MessageListener from './messageListener';
+import MessageListener from './scripts/messageListener';
 // import { getStore } from './store';
-import { setupStorageListener } from './storage';
+import { setupStorageListener } from './scripts/storage';
 
 import { sendMessage } from 'utils';
-import { initStore } from './initStore';
+import { initStore } from './scripts/initStore';
+import { setupMenu } from './scripts/setupMenu';
 
 // const store = getStore();
 
@@ -27,7 +28,15 @@ jquery(() => {
      */
     browser.runtime.onMessage.addListener(MessageListener);
 
+    /**
+     * Setup Popup Page
+     */
     sendMessage({
         type: 'ACTIVE_PAGE_ACTION',
     });
+
+    /**
+     * Setup Menu
+     */
+    setupMenu();
 });

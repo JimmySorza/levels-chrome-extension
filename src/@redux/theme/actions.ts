@@ -1,17 +1,17 @@
 import { Dispatch } from 'react';
-import { User } from 'types';
+import { Theme } from 'types';
 import { localStorage } from 'utils';
 
-export type UserAction = {
+export type ThemeAction = {
     type: ActionType;
-    payload?: User;
+    payload?: Theme;
 };
 
 export type ActionType = 'GET_THEME';
 
-export const get = (dispatch: Dispatch<UserAction>) => {
+export const get = (dispatch: Dispatch<ThemeAction>) => {
     return dispatch({
         type: 'GET_THEME',
-        payload: localStorage('theme').get() as User,
+        payload: localStorage('theme').get() as Theme,
     });
 };

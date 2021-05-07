@@ -22,7 +22,7 @@
         "scripts": ["background/background.js", "hotreload/hotreload.js"],
         "persistent": true
     },
-    "permissions": ["webNavigation", "http://*.notion.so/*", "https://*.notion.so/*"],
+    "permissions": ["http://*.notion.so/*", "https://*.notion.so/*"],
     "options_ui": {
         "page": "options/index.html"
     },

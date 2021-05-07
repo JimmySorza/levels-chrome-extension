@@ -17,7 +17,7 @@
     "background": {
         "scripts": ["background/background.js"]
     },
-    "permissions": ["webNavigation", "http://*.notion.so/*", "https://*.notion.so/*"],
+    "permissions": ["http://*.notion.so/*", "https://*.notion.so/*"],
     "options_ui": {
         "page": "options/index.html"
     },

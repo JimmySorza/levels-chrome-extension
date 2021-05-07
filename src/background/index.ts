@@ -27,8 +27,6 @@ class Background {
         //Add message listener in Browser.
         // @ts-ignore
         browser.runtime.onMessage.addListener(this.onMessage);
-
-        browser.webNavigation.onHistoryStateUpdated.addListener(this.onHistoryStateUpdated);
     };
 
     //TODO: Listeners
@@ -57,12 +55,6 @@ class Background {
             }
         }
         return true;
-    };
-
-    onHistoryStateUpdated = (details: WebNavigation.OnHistoryStateUpdatedDetailsType) => {
-        if (details.url.indexOf('notion.so') >= 0) {
-            browser.tabs.executeScript(details.tabId, { file: 'content/content.js', runAt: 'document_end' });
-        }
     };
 
     /**

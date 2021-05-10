@@ -1,7 +1,9 @@
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ZipPlugin = require('zip-webpack-plugin');
 const path = require('path');
+const dotenv = require('dotenv').config({ path: __dirname + '/.env' });
 
 const getHTMLPlugins = (browserDir, outputDir = 'dev', sourceDir = 'src') => [
     new HtmlWebpackPlugin({
@@ -15,6 +17,16 @@ const getHTMLPlugins = (browserDir, outputDir = 'dev', sourceDir = 'src') => [
         filename: path.resolve(__dirname, `${outputDir}/${browserDir}/options/index.html`),
         template: `${sourceDir}/options/index.html`,
         chunks: ['options'],
+    }),
+];
+
+const getDefinePlugins = (browserDir, outputDir = 'dev', sourceDir = 'src') => [
+    new webpack.DefinePlugin({
+        'process.env.NODE_ENV':
+            outputDir === 'dev'
+                ? JSON.stringify(process.env.NODE_ENV || 'development')
+                : JSON.stringify(process.env.NODE_ENV || 'production'),
+        'process.env': dotenv.parsed,
     }),
 ];
 
@@ -115,4 +127,5 @@ module.exports = {
     getZipPlugin,
     getEntry,
     getResolves,
+    getDefinePlugins,
 };

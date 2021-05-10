@@ -8,6 +8,7 @@ const {
     getFirefoxCopyPlugins,
     getEntry,
     getResolves,
+    getDefinePlugins,
 } = require('./webpack.utils');
 const config = require('./config.json');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -62,9 +63,7 @@ module.exports = [
             new webpack.ProgressPlugin(),
             new CleanWebpackPlugin(),
             new ESLintPlugin(eslintOptions),
-            new webpack.DefinePlugin({
-                'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
-            }),
+            ...getDefinePlugins('chrome', config.tempDirectory, config.chromePath),
             ...getHTMLPlugins('chrome', config.tempDirectory, config.chromePath),
             ...getCopyPlugins('chrome', config.tempDirectory, config.chromePath),
             getZipPlugin('chrome', config.distDirectory),
@@ -78,9 +77,7 @@ module.exports = [
             new webpack.ProgressPlugin(),
             new CleanWebpackPlugin(),
             new ESLintPlugin(eslintOptions),
-            new webpack.DefinePlugin({
-                'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
-            }),
+            ...getDefinePlugins('opera', config.tempDirectory, config.chromePath),
             ...getHTMLPlugins('opera', config.tempDirectory, config.operaPath),
             ...getCopyPlugins('opera', config.tempDirectory, config.operaPath),
             getZipPlugin('opera', config.distDirectory),
@@ -94,9 +91,7 @@ module.exports = [
             new webpack.ProgressPlugin(),
             new CleanWebpackPlugin(),
             new ESLintPlugin(eslintOptions),
-            new webpack.DefinePlugin({
-                'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
-            }),
+            ...getDefinePlugins('firefox', config.tempDirectory, config.chromePath),
             ...getHTMLPlugins('firefox', config.tempDirectory, config.firefoxPath),
             ...getFirefoxCopyPlugins('firefox', config.tempDirectory, config.firefoxPath),
             getZipPlugin('firefox', config.distDirectory),

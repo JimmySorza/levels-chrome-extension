@@ -6,8 +6,8 @@ const {
     getFirefoxCopyPlugins,
     getEntry,
     getResolves,
+    getDefinePlugins,
 } = require('./webpack.utils');
-const webpack = require('webpack');
 
 const config = require('./config.json');
 
@@ -51,9 +51,7 @@ module.exports = [
         output: getOutput('chrome', config.devDirectory),
         plugins: [
             new ESLintPlugin(eslintOptions),
-            new webpack.DefinePlugin({
-                'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-            }),
+            ...getDefinePlugins('chrome', config.devDirectory, config.chromePath),
             ...getHTMLPlugins('chrome', config.devDirectory, config.chromePath),
             ...getCopyPlugins('chrome', config.devDirectory, config.chromePath),
         ],
@@ -64,9 +62,7 @@ module.exports = [
         output: getOutput('opera', config.devDirectory),
         plugins: [
             new ESLintPlugin(eslintOptions),
-            new webpack.DefinePlugin({
-                'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-            }),
+            ...getDefinePlugins('opera', config.devDirectory, config.chromePath),
             ...getHTMLPlugins('opera', config.devDirectory, config.operaPath),
             ...getCopyPlugins('opera', config.devDirectory, config.operaPath),
         ],
@@ -77,9 +73,7 @@ module.exports = [
         output: getOutput('firefox', config.devDirectory),
         plugins: [
             new ESLintPlugin(eslintOptions),
-            new webpack.DefinePlugin({
-                'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-            }),
+            ...getDefinePlugins('firefox', config.devDirectory, config.chromePath),
             ...getFirefoxCopyPlugins('firefox', config.devDirectory, config.firefoxPath),
             ...getHTMLPlugins('firefox', config.devDirectory, config.firefoxPath),
         ],

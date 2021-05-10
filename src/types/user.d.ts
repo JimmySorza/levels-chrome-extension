@@ -20,4 +20,5 @@ export type User = {
     is_ios?: boolean;
     is_logged_in?: true;
     groups?: Array<Group['space_id']>;
+    image?: string;
 };

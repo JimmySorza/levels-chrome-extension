@@ -6,7 +6,7 @@ import { StorageKey } from 'types';
  * @param storageKey
  * @returns
  */
-export function createLocalStorageAccess<State>(storageKey: StorageKey) {
+export function createLocalStorageAccess<State = any>(storageKey: StorageKey | string) {
     return {
         clear: async () => {
             localStorage.removeItem(storageKey);

@@ -1,6 +1,6 @@
 import { Dispatch } from 'react';
 import { User } from 'types';
-import { localStorage } from 'utils';
+import { convertIdToKey, localStorage } from 'utils';
 
 export type UserAction = {
     type: ActionType;
@@ -10,8 +10,19 @@ export type UserAction = {
 export type ActionType = 'GET_USER';
 
 export const get = (dispatch: Dispatch<UserAction>) => {
+    const userData = localStorage('ajs_user_traits').get() as User;
+
+    const imageKey = `LRU:LocalPreferenceStore3:${convertIdToKey(
+        userData?.user_id || ''
+    )}:PublicSpaceData:${convertIdToKey((userData?.groups || [])[0] || '')}`;
+
+    const imageData = localStorage(imageKey).get();
+
     return dispatch({
         type: 'GET_USER',
-        payload: localStorage('ajs_user_traits').get() as User,
+        payload: {
+            ...userData,
+            image: imageData?.value?.icon || '',
+        },
     });
 };

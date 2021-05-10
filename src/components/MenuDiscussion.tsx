@@ -1,12 +1,28 @@
 import React from 'react';
 import SmsIcon from '@material-ui/icons/Sms';
-import { OverlaySelector } from 'content/scripts/selectors';
+import { getSelectableBlockIdByChild, getOverlayEl } from 'content/scripts/selectors';
+import { useStore } from 'react-redux';
+import { setAnchor, setInput } from '@redux/comments/actions';
+import jquery from 'jquery';
 
-export type DiscussionMenuProps = {};
+export type DiscussionMenuProps = {
+    anchor: HTMLElement;
+};
 
 export const DiscussionMenu = (props: DiscussionMenuProps) => {
+    const store = useStore();
+
+    React.useEffect(() => {
+        const blockId = getSelectableBlockIdByChild(props.anchor);
+        if (blockId) {
+            setAnchor(store.dispatch, blockId);
+        }
+    }, []);
+
     const handleClickDiscussion = () => {
-        OverlaySelector().click();
+        setInput(store.dispatch, true);
+        // close modal
+        getOverlayEl().click();
     };
 
     return (

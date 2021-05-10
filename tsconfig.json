@@ -19,7 +19,8 @@
             "assets/*": ["./assets/*"],
             "components/*": ["./components/*"],
             "types/*": ["./types/*"],
-            "@redux/*": ["./@redux/*"]
+            "@redux/*": ["./@redux/*"],
+            "@hooks/*": ["./hooks/*"]
         }
     }
 }

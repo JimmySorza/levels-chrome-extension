@@ -1,12 +1,12 @@
-import { Comment } from 'types';
+import { CommentData } from 'types';
 
 const initialState: {
     isInput?: boolean;
-    comments?: Comment;
+    data?: CommentData;
     anchor?: string; // Content block id
 } = {
     isInput: false,
-    comments: [],
+    data: {},
 };
 
 export default initialState;

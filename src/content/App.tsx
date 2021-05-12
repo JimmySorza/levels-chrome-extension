@@ -4,7 +4,7 @@ import { ModalComment } from 'components/ModalComment';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { sendMessage } from 'utils';
-import { getStore } from './scripts/store';
+import { getStore } from './scripts';
 
 export const App = () => {
     React.useEffect(() => {

@@ -21,7 +21,6 @@ export const DiscussionMenu = (props: DiscussionMenuProps) => {
 
     const handleClickDiscussion = () => {
         setInput(store.dispatch, true);
-        // close modal
         getOverlayEl().click();
     };
 

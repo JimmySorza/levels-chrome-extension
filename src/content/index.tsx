@@ -1,29 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
 import { browser } from 'webextension-polyfill-ts';
 import jquery from 'jquery';
 
-import MessageListener from './scripts/messageListener';
-// import { getStore } from './store';
-import { setupStorageListener } from './scripts/storage';
-
 import { sendMessage } from 'utils';
-import { initStore } from './scripts/initStore';
-import { setupMenu } from './scripts/setupMenu';
-import { getStore } from './scripts/store';
-import App from './App';
 
-const app = document.createElement('div');
-app.id = 'my-extension-root';
-document.body.appendChild(app);
+import { setupMenu } from './Menu';
+import { setupAPICallHooks, getStore, onRequest, initStore, setupStorageListener } from './scripts';
+import { setupDiscussion } from './Discussions';
+
 const store = getStore();
 
 jquery(() => {
-    store.ready().then(() => {
-        initStore();
-        ReactDOM.render(<App />, app);
-    });
+    setupAPICallHooks();
 
     /**
      * Setup Storage Listener
@@ -33,7 +20,7 @@ jquery(() => {
     /**
      * Set up Message Listener
      */
-    browser.runtime.onMessage.addListener(MessageListener);
+    browser.runtime.onMessage.addListener(onRequest);
 
     /**
      * Setup Popup Page
@@ -46,4 +33,9 @@ jquery(() => {
      * Setup Menu
      */
     setupMenu();
+
+    store.ready().then(() => {
+        initStore();
+        setupDiscussion();
+    });
 });

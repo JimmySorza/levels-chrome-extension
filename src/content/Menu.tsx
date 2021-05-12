@@ -3,9 +3,8 @@ import ReactDOM from 'react-dom';
 import jquery from 'jquery';
 import { Provider } from 'react-redux';
 
-import { getStore } from './store';
+import { getStore, getMenuCommentEl, getPageContentEl } from './scripts';
 import { DiscussionMenu } from 'components';
-import { getMenuCommentEl, getPageContentEl } from './selectors';
 import { asyncTimeOut } from 'utils';
 
 export const setupMenu = () => {

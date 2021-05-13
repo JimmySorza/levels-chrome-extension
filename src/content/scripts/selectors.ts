@@ -28,6 +28,8 @@ export const getOverlayEl = () =>
         .children(':eq(0)')
         .children(':eq(0)');
 
+export const getSelectableBlocks = () => jquery('div.notion-selectable');
+
 /**
  * Get Selectable Content's Id by child dom
  *

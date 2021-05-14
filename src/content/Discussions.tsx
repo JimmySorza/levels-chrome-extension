@@ -7,38 +7,53 @@ import jquery from 'jquery';
 import { AppState } from '@redux';
 
 import { BlockComment } from 'types';
-import { getDiscussionButtonRoot, getSelectableBlocks, getStore } from './scripts';
+import { getDiscussionButtonRoot, getDiscussionListRoot, getSelectableBlocks, getStore } from './scripts';
 import { DiscussionButton } from './DiscussionButton';
 import { DiscussionList } from './DiscussionList';
 
+let observer;
+
 export const setupDiscussion = async () => {
-    const store = getStore();
-    const state: AppState = store.getState();
+    observer = new MutationObserver(onLoadedContent);
+    observer.observe(document.querySelector('#notion-app') as any, { subtree: true, childList: true });
+};
 
-    const blocks = getSelectableBlocks();
-    console.log('~~~~ blocks', document.querySelectorAll('div.notion-selectable'));
-    blocks.each((index, element) => {
-        console.log('~~~~~ index', index, jquery(element).attr('data-block-id'));
-    });
+export const onLoadedContent = (mutations_list: MutationRecord[]) => {
+    mutations_list.forEach(function (mutation) {
+        mutation.addedNodes.forEach(function (added_node) {
+            //@ts-ignore
+            if (added_node.className === 'notion-page-content') {
+                setTimeout(() => {
+                    const blocks = getSelectableBlocks();
 
-    Object.keys(state?.comments?.data || {}).map((blockId) => {
-        renderComments(blockId, _.get(state, `comments.data.${blockId}`, {}));
-        return blockId;
+                    blocks.each((index, element) => {
+                        renderComments(jquery(element).attr('data-block-id') || '');
+                    });
+                }, 2000);
+            }
+        });
     });
 };
 
 export const renderComments = (blockId: string, comment: BlockComment = {}) => {
+    if (!blockId) {
+        return;
+    }
+    const buttonRoot = getDiscussionButtonRoot(blockId);
+    const listRoot = getDiscussionListRoot(blockId);
+    console.log('~~~~~~~~~~~~ get routes', blockId, buttonRoot, listRoot);
+
     const store = getStore();
     ReactDOM.render(
         <Provider store={store}>
             <DiscussionButton blockId={blockId} />
         </Provider>,
-        getDiscussionButtonRoot(blockId)
+        buttonRoot
     );
     ReactDOM.render(
         <Provider store={store}>
             <DiscussionList blockId={blockId} />
         </Provider>,
-        getDiscussionButtonRoot(blockId)
+        listRoot
     );
 };

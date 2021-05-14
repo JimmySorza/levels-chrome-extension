@@ -28,7 +28,7 @@ export const getOverlayEl = () =>
         .children(':eq(0)')
         .children(':eq(0)');
 
-export const getSelectableBlocks = () => jquery('div.notion-selectable');
+export const getSelectableBlocks = () => jquery('div.notion-page-content div.notion-selectable');
 
 /**
  * Get Selectable Content's Id by child dom
@@ -46,28 +46,29 @@ export const getSelectableBlockIdByChild = (anchor: HTMLElement): string =>
  * @returns
  */
 export const getSelectableBlockIdByBlockId = (blockId: string) =>
-    jquery(`div.notion-selectable[data-block-id="${blockId}"]`);
+    jquery(`div.notion-page-content div.notion-selectable[data-block-id="${blockId}"]`);
 
 export const getEditableBlockEl = (blockId: string) => {
     return getSelectableBlockIdByBlockId(blockId).find(`[contenteditable="true"]`);
 };
 
-export const getDiscussionButtonRoot = (blockId: string) => {
+export const getDiscussionButtonRoot = (blockId: string): HTMLElement => {
     let app: any;
-    app = getSelectableBlockIdByBlockId(blockId).find(`#levels-discussion-btn-root`);
+    app = getSelectableBlockIdByBlockId(blockId).find(`#levels-discussion-btn-root`).get(0);
     if (app) {
         return app;
     }
+
     app = document.createElement('div');
     const editableBlockEl = getEditableBlockEl(blockId);
     app.id = 'levels-discussion-btn-root';
     editableBlockEl.after(app);
-    return jquery(app);
+    return app;
 };
 
-export const getDiscussionListRoot = (blockId: string) => {
+export const getDiscussionListRoot = (blockId: string): HTMLElement => {
     let app: any;
-    getSelectableBlockIdByBlockId(blockId).find(`#levels-discussion-list-root`);
+    getSelectableBlockIdByBlockId(blockId).find(`#levels-discussion-list-root`).get(0);
     if (app) {
         return app;
     }
@@ -75,5 +76,5 @@ export const getDiscussionListRoot = (blockId: string) => {
     app = document.createElement('div');
     app.id = 'levels-discussion-list-root';
     editableBlockEl.parent().after(app);
-    return jquery(app);
+    return app;
 };

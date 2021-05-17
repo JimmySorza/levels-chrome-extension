@@ -23,10 +23,16 @@ export const getMenuCommentEl = () =>
  * @returns
  */
 export const getOverlayEl = () =>
-    jquery('.notion-overlay-container.notion-default-overlay-container')
-        .children(':eq(1)')
-        .children(':eq(0)')
-        .children(':eq(0)');
+    jquery('.notion-overlay-container.notion-default-overlay-container #levels-menu-discussion')
+        .parent()
+        .parent()
+        .parent()
+        .parent()
+        .parent()
+        .parent()
+        .parent()
+        .parent()
+        .prev();
 
 export const getSelectableBlocks = () => jquery('div.notion-page-content div.notion-selectable');
 

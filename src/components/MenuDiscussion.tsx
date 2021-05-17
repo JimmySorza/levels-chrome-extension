@@ -2,12 +2,13 @@ import React from 'react';
 import SmsIcon from '@material-ui/icons/Sms';
 import { makeStyles } from '@material-ui/styles';
 import { useStore } from 'react-redux';
+import { Theme, useTheme } from '@material-ui/core';
 
 import { getSelectableBlockIdByChild, getOverlayEl } from 'content/scripts/selectors';
 import { setAnchor, setInput } from '@redux/comments/actions';
 import { MyBox } from './MyBox';
-import { Theme, useTheme } from '@material-ui/core';
 import { useRedux } from '@redux';
+import jquery from 'jquery';
 
 export type DiscussionMenuProps = {
     anchor: HTMLElement;
@@ -26,6 +27,19 @@ export const DiscussionMenu = (props: DiscussionMenuProps) => {
 
     const handleClickDiscussion = () => {
         setInput(store.dispatch, true);
+        console.log(
+            '~~~~~~ overley',
+            jquery('.notion-overlay-container.notion-default-overlay-container #levels-menu-discussion')
+                .parent()
+                .parent()
+                .parent()
+                .parent()
+                .parent()
+                .parent()
+                .parent()
+                .parent()
+                .before()
+        );
         getOverlayEl().click();
     };
 

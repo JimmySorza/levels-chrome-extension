@@ -27,19 +27,6 @@ export const DiscussionMenu = (props: DiscussionMenuProps) => {
 
     const handleClickDiscussion = () => {
         setInput(store.dispatch, true);
-        console.log(
-            '~~~~~~ overley',
-            jquery('.notion-overlay-container.notion-default-overlay-container #levels-menu-discussion')
-                .parent()
-                .parent()
-                .parent()
-                .parent()
-                .parent()
-                .parent()
-                .parent()
-                .parent()
-                .before()
-        );
         getOverlayEl().click();
     };
 

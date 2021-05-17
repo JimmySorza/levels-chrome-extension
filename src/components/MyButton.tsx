@@ -1,27 +1,26 @@
 import React from 'react';
 import { Button, Color, createMuiTheme, ThemeProvider, ButtonProps } from '@material-ui/core';
+import { blueGrey, green } from '@material-ui/core/colors';
 
-export type MyButtonProps = Omit<ButtonProps, 'color'> & {
-    color: Color;
+export type MyButtonProps = ButtonProps & {
     children: React.ReactNode;
 };
 
-export const MyButton = ({ color, children, ...restProps }: MyButtonProps) => {
+export const MyButton = ({ children, ...restProps }: MyButtonProps) => {
     const theme = React.useMemo(
         () =>
             createMuiTheme({
                 palette: {
-                    primary: color,
+                    primary: green,
+                    secondary: blueGrey,
                 },
             }),
-        [color]
+        []
     );
 
     return (
         <ThemeProvider theme={theme}>
-            <Button color="primary" {...restProps}>
-                {children}
-            </Button>
+            <Button {...restProps}>{children}</Button>
         </ThemeProvider>
     );
 };

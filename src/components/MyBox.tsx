@@ -13,8 +13,7 @@ import {
     typography,
     grid,
 } from '@material-ui/system';
-import { Box } from '@material-ui/core';
 
-export const MyBox = styled(Box)(
+export const MyBox = styled('div')(
     compose(grid, spacing, palette, border, display, flexbox, positions, shadows, sizing, typography)
 );

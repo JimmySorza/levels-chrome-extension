@@ -11,6 +11,8 @@ import { setupDiscussion } from './Discussions';
 import App from './App';
 import { Content } from './Content';
 
+import './App.scss';
+
 const app = document.createElement('div');
 app.id = 'my-extension-root';
 document.body.appendChild(app);

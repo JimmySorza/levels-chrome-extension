@@ -1,0 +1,55 @@
+$white: rgba(255, 255, 255, 0.9);
+$black: rgba(0, 0, 0, 0.9);
+
+#levels-menu-discussion .MuiSvgIcon-root {
+    font-size: 1.2rem;
+}
+
+.levels-btn-cancel {
+    margin-right: 20px !important;
+}
+
+.notion-dark-theme {
+    #levels-menu-discussion {
+        box-shadow: rgba(255, 255, 255, 0.07) 0px -1px 0px;
+        .MuiSvgIcon-root {
+            color: $white;
+        }
+    }
+
+    #levels-list-discussion-root {
+        textarea {
+            color: $white;
+            background-color: $black;
+        }
+
+        .levels-btn-cancel,
+        .levels-btn-comment {
+            color: $white;
+        }
+    }
+}
+.notion-light-theme {
+    // * {
+    //     color: rgba(0, 0, 0, 0.9);
+    //     background-color: rgba(255, 255, 255, 0.9);
+    // }
+
+    #levels-menu-discussion {
+        box-shadow: rgba(55, 53, 47, 0.09) 0px -1px 0px;
+        .MuiSvgIcon-root {
+            color: $black;
+        }
+    }
+
+    #levels-list-discussion-root {
+        textarea {
+            color: $black;
+            background-color: $white;
+        }
+        .levels-btn-cancel,
+        .levels-btn-comment {
+            color: $black;
+        }
+    }
+}

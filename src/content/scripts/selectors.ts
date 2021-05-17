@@ -1,4 +1,5 @@
 import jquery from 'jquery';
+import { LEVELS_BTN_DISCUSSION_ROOT_ID, LEVELS_LIST_DISCUSSION_ROOT_ID, LEVELS_MENU_DISCUSSION_ID } from './constant';
 
 /**
  * Get Page Content
@@ -23,7 +24,7 @@ export const getMenuCommentEl = () =>
  * @returns
  */
 export const getOverlayEl = () =>
-    jquery('.notion-overlay-container.notion-default-overlay-container #levels-menu-discussion')
+    jquery(`.notion-overlay-container.notion-default-overlay-container #${LEVELS_MENU_DISCUSSION_ID}`)
         .parent()
         .parent()
         .parent()
@@ -60,27 +61,27 @@ export const getEditableBlockEl = (blockId: string) => {
 
 export const getDiscussionButtonRoot = (blockId: string): HTMLElement => {
     let app: any;
-    app = getSelectableBlockIdByBlockId(blockId).find(`#levels-discussion-btn-root`).get(0);
+    app = getSelectableBlockIdByBlockId(blockId).find(`#${LEVELS_BTN_DISCUSSION_ROOT_ID}`).get(0);
     if (app) {
         return app;
     }
 
     app = document.createElement('div');
     const editableBlockEl = getEditableBlockEl(blockId);
-    app.id = 'levels-discussion-btn-root';
+    app.id = LEVELS_BTN_DISCUSSION_ROOT_ID;
     editableBlockEl.after(app);
     return app;
 };
 
 export const getDiscussionListRoot = (blockId: string): HTMLElement => {
     let app: any;
-    app = getSelectableBlockIdByBlockId(blockId).find(`#levels-discussion-list-root`).get(0);
+    app = getSelectableBlockIdByBlockId(blockId).find(`#${LEVELS_LIST_DISCUSSION_ROOT_ID}`).get(0);
     if (app) {
         return app;
     }
     const editableBlockEl = getEditableBlockEl(blockId);
     app = document.createElement('div');
-    app.id = 'levels-discussion-list-root';
+    app.id = LEVELS_LIST_DISCUSSION_ROOT_ID;
     editableBlockEl.parent().after(app);
     return app;
 };

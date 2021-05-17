@@ -1,8 +1,6 @@
 import React from 'react';
 import SmsIcon from '@material-ui/icons/Sms';
-import { makeStyles } from '@material-ui/styles';
 import { useStore } from 'react-redux';
-import { Theme, useTheme } from '@material-ui/core';
 
 import { getSelectableBlockIdByChild, getOverlayEl } from 'content/scripts/selectors';
 import { setAnchor, setInput } from '@redux/comments/actions';
@@ -48,7 +46,7 @@ export const DiscussionMenu = (props: DiscussionMenuProps) => {
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: '14px' }}>
                 <SmsIcon fontSize="small" color="primary" />
             </div>
-            <div style={{ marginLeft: '8px', marginRight: '14px', minWidth: '0px', flex: '1 1 auto' }}>Discussion</div>
+            <div style={{ marginLeft: '6px', marginRight: '14px', minWidth: '0px', flex: '1 1 auto' }}>Discussion</div>
         </MyBox>
     );
 };

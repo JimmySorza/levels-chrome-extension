@@ -1,12 +1,8 @@
 import { createStore, applyMiddleware } from 'redux';
 import { alias } from 'webext-redux';
 import createAppReducer from './rootReducer';
-
-const aliases = {
-    GET_USER: () => {
-        console.log('~~~~ getting user');
-    },
-};
+// import thunk from 'redux-thunk';
+import { aliases } from './aliases';
 
 export const createStoreInstance = (preloadedState) => {
     const appReducer = createAppReducer(preloadedState);

@@ -4,7 +4,7 @@ import { useStore } from 'react-redux';
 
 import { MyBox, MyButton } from 'components';
 
-import { setAnchor, setInput } from '@redux/comments/actions';
+import { setAnchor, setInput, setComment } from '@redux/comments/actions';
 
 export type DiscussionListProps = {
     blockId: string;
@@ -14,7 +14,7 @@ export const DiscussionList = (props: DiscussionListProps) => {
     const inputRef = React.useRef<HTMLTextAreaElement>(null);
     const store = useStore();
     const commentsState = useRedux('comments');
-    const [comment, setComment] = React.useState('');
+    const [commentValue, setCommentValue] = React.useState('');
 
     React.useEffect(() => {
         if (inputRef.current) {
@@ -39,7 +39,7 @@ export const DiscussionList = (props: DiscussionListProps) => {
     }, [commentsState.anchor, commentsState.isInput]);
 
     const handleChangeComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setComment(e.target.value);
+        setCommentValue(e.target.value);
     };
 
     const handleClickCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -49,7 +49,9 @@ export const DiscussionList = (props: DiscussionListProps) => {
     };
 
     const handleClickComment = (e: React.MouseEvent<HTMLButtonElement>) => {
-        console.log('~~~~ clicked comment');
+        setComment(store.dispatch, commentValue);
+        setInput(store.dispatch, false);
+        setAnchor(store.dispatch, '');
     };
 
     return (
@@ -61,7 +63,7 @@ export const DiscussionList = (props: DiscussionListProps) => {
                         <textarea
                             ref={inputRef}
                             rows={1}
-                            value={comment}
+                            value={commentValue}
                             onChange={handleChangeComment}
                             style={{
                                 width: '100%',

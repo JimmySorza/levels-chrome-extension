@@ -1,8 +1,8 @@
-import { CommentData } from 'types';
+import { SpaceBlockComment } from 'types';
 
 const initialState: {
     isInput?: boolean;
-    data?: CommentData;
+    data?: SpaceBlockComment;
     anchor?: string; // Content block id
 } = {
     isInput: false,

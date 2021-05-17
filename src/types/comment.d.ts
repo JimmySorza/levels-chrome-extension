@@ -9,10 +9,12 @@ export type Comment = {
 };
 
 export type BlockComment = {
-    comments?: Array<Comment>;
+    comments?: {
+        [index: string]: Comment;
+    };
     is_collapsed?: boolean;
 };
 
-export type CommentData = {
+export type SpaceBlockComment = {
     [index: string]: BlockComment;
 };

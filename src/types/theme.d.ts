@@ -1,3 +1,3 @@
 export type Theme = {
-    mode?: string;
+    mode?: 'light' | 'dark';
 };

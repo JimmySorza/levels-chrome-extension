@@ -1,9 +1,13 @@
 import React from 'react';
 import SmsIcon from '@material-ui/icons/Sms';
-import { getSelectableBlockIdByChild, getOverlayEl } from 'content/scripts/selectors';
+import { makeStyles } from '@material-ui/styles';
 import { useStore } from 'react-redux';
+
+import { getSelectableBlockIdByChild, getOverlayEl } from 'content/scripts/selectors';
 import { setAnchor, setInput } from '@redux/comments/actions';
-import jquery from 'jquery';
+import { MyBox } from './MyBox';
+import { Theme, useTheme } from '@material-ui/core';
+import { useRedux } from '@redux';
 
 export type DiscussionMenuProps = {
     anchor: HTMLElement;
@@ -11,10 +15,11 @@ export type DiscussionMenuProps = {
 
 export const DiscussionMenu = (props: DiscussionMenuProps) => {
     const store = useStore();
+    const commentsState = useRedux('comments');
 
     React.useEffect(() => {
         const blockId = getSelectableBlockIdByChild(props.anchor);
-        if (blockId) {
+        if (blockId && !commentsState.isInput) {
             setAnchor(store.dispatch, blockId);
         }
     }, []);
@@ -25,7 +30,7 @@ export const DiscussionMenu = (props: DiscussionMenuProps) => {
     };
 
     return (
-        <div
+        <MyBox
             style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -43,6 +48,6 @@ export const DiscussionMenu = (props: DiscussionMenuProps) => {
                 <SmsIcon fontSize="small" color="primary" />
             </div>
             <div style={{ marginLeft: '8px', marginRight: '14px', minWidth: '0px', flex: '1 1 auto' }}>Discussion</div>
-        </div>
+        </MyBox>
     );
 };

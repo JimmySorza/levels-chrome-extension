@@ -1,10 +1,10 @@
 import React from 'react';
 import { Container, Typography, Divider } from '@material-ui/core';
-import { Box } from 'components';
+import { MyBox } from 'components';
 
 export const PageHome = () => {
     return (
-        <Box p={1}>
+        <MyBox p={1}>
             <Container>
                 <Typography align="center" variant="h5">
                     Levels
@@ -14,7 +14,7 @@ export const PageHome = () => {
                     Please use comment system
                 </Typography>
             </Container>
-        </Box>
+        </MyBox>
     );
 };
 

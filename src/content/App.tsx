@@ -1,20 +1,32 @@
-import { Popover } from '@material-ui/core';
-import { useRedux } from '@redux';
-import { ModalComment } from 'components/ModalComment';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { sendMessage } from 'utils';
+import { Theme } from '@material-ui/core';
+import { ThemeProvider, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+
+import { AppState } from '@redux';
 import { getStore } from './scripts';
 
-export const App = () => {
-    React.useEffect(() => {
-        sendMessage({ type: 'ACTIVE_PAGE_ACTION' });
-    }, []);
+export type AppProps = {
+    children: React.ReactNode;
+};
+
+export const App = ({ children }: AppProps) => {
+    const store = getStore();
+    const appState: AppState = store.getState();
+
+    const theme = React.useMemo(
+        () =>
+            createMuiTheme({
+                palette: {
+                    type: appState?.theme?.mode || 'light',
+                },
+            }),
+        [appState]
+    );
 
     return (
-        <Provider store={getStore()}>
-            <ModalComment />
-            <div></div>
+        <Provider store={store}>
+            <MuiThemeProvider theme={theme}>{children}</MuiThemeProvider>
         </Provider>
     );
 };

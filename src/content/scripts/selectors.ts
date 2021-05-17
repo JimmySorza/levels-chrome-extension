@@ -68,7 +68,7 @@ export const getDiscussionButtonRoot = (blockId: string): HTMLElement => {
 
 export const getDiscussionListRoot = (blockId: string): HTMLElement => {
     let app: any;
-    getSelectableBlockIdByBlockId(blockId).find(`#levels-discussion-list-root`).get(0);
+    app = getSelectableBlockIdByBlockId(blockId).find(`#levels-discussion-list-root`).get(0);
     if (app) {
         return app;
     }

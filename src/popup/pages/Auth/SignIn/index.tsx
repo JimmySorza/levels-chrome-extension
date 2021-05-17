@@ -5,7 +5,7 @@ import { spacing } from '@material-ui/system';
 import { styled } from '@material-ui/core/styles';
 import MuiButton from '@material-ui/core/Button';
 
-import { Box } from 'components';
+import { MyBox } from 'components';
 
 const Button = styled(MuiButton)(spacing);
 
@@ -23,22 +23,22 @@ export const PageSignIn = (props: PageSignInProps) => {
     };
 
     return (
-        <Box p={1}>
+        <MyBox p={1}>
             <Container>
                 <Typography align="center" variant="h5">
                     Levels
                 </Typography>
                 <Divider variant="fullWidth" />
-                <Box pt={2}>
+                <MyBox pt={2}>
                     <Typography align="center" variant="h6">
                         Sign In
                     </Typography>
                     <Button variant="contained" color="primary" fullWidth mt={1} onClick={handleClickSignIn}>
                         Sing In
                     </Button>
-                </Box>
+                </MyBox>
             </Container>
-        </Box>
+        </MyBox>
     );
 };
 

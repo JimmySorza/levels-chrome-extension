@@ -1,15 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'lodash';
-import { Provider } from 'react-redux';
 import jquery from 'jquery';
-
-import { AppState } from '@redux';
 
 import { BlockComment } from 'types';
 import { getDiscussionButtonRoot, getDiscussionListRoot, getSelectableBlocks, getStore } from './scripts';
 import { DiscussionButton } from './DiscussionButton';
 import { DiscussionList } from './DiscussionList';
+import App from './App';
 
 let observer;
 
@@ -43,17 +41,16 @@ export const renderComments = (blockId: string, comment: BlockComment = {}) => {
     const listRoot = getDiscussionListRoot(blockId);
     console.log('~~~~~~~~~~~~ get routes', blockId, buttonRoot, listRoot);
 
-    const store = getStore();
     ReactDOM.render(
-        <Provider store={store}>
+        <App>
             <DiscussionButton blockId={blockId} />
-        </Provider>,
+        </App>,
         buttonRoot
     );
     ReactDOM.render(
-        <Provider store={store}>
+        <App>
             <DiscussionList blockId={blockId} />
-        </Provider>,
+        </App>,
         listRoot
     );
 };

@@ -11,8 +11,10 @@ import {
     shadows,
     sizing,
     typography,
+    grid,
 } from '@material-ui/system';
+import { Box } from '@material-ui/core';
 
-export const Box = styled('div')(
-    compose(spacing, palette, border, display, flexbox, positions, shadows, sizing, typography)
+export const MyBox = styled(Box)(
+    compose(grid, spacing, palette, border, display, flexbox, positions, shadows, sizing, typography)
 );

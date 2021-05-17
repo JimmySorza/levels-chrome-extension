@@ -4,7 +4,7 @@ import { useRedux } from '@redux';
 import { useStore } from 'react-redux';
 import { setInput } from '@redux/comments/actions';
 import { getSelectableBlockIdByBlockId } from 'content/scripts/selectors';
-import { Box } from './Box';
+import { MyBox } from './MyBox';
 
 export type ModalCommentProps = {};
 
@@ -33,7 +33,7 @@ export const ModalComment = (props: ModalCommentProps) => {
                 horizontal: 'center',
             }}
         >
-            <Box p={1}>
+            <MyBox p={1}>
                 <Grid container spacing={1} alignItems="center">
                     <Grid item>
                         <Avatar
@@ -53,7 +53,7 @@ export const ModalComment = (props: ModalCommentProps) => {
                         </Button>
                     </Grid>
                 </Grid>
-            </Box>
+            </MyBox>
         </Popover>
     );
 };

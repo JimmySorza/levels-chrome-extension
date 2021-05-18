@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 
-import { Avatar } from '@material-ui/core';
+import { Avatar, Tooltip } from '@material-ui/core';
 import { MyBox } from 'components';
 
 import { Comment, User } from 'types';
@@ -17,12 +17,15 @@ export const DiscussionCard = (props: DiscussionCardProps) => {
 
     return (
         <MyBox display="flex" flexDirection="row" alignItems="center" p={1}>
-            <Avatar
-                src={userInfo.profile_photo}
-                alt={`${userInfo?.given_name || ''} ${userInfo?.family_name || ''}`}
-                sizes=""
-            />
-            <MyBox width="20px" />
+            <Tooltip title={`${userInfo?.given_name || ''} ${userInfo?.family_name || ''}`}>
+                <Avatar
+                    src={userInfo.profile_photo}
+                    alt={`${userInfo?.given_name || ''} ${userInfo?.family_name || ''}`}
+                    sizes=""
+                />
+            </Tooltip>
+
+            <MyBox width="10px" />
             <MyBox>{props?.discussion?.comment || ''}</MyBox>
         </MyBox>
     );

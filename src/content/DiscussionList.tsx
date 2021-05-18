@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { MyBox, MyButton } from 'components';
 
 import { setAnchor, setInput, saveComment } from '@redux/comments/actions';
-import { Avatar } from '@material-ui/core';
+import { Avatar, Tooltip } from '@material-ui/core';
 import { DiscussionCard } from './DiscussionCard';
 import { BlockComment } from 'types';
 
@@ -19,7 +19,7 @@ export const DiscussionList = (props: DiscussionListProps) => {
     const store = useStore();
     const commentsState = useRedux('comments');
     const userState = useRedux('user');
-    console.log('~~~~~ commentsState', commentsState);
+
     const [commentValue, setCommentValue] = React.useState('');
     const discussions: BlockComment = _.get(commentsState, `data.${props.blockId}`, {});
 
@@ -52,28 +52,41 @@ export const DiscussionList = (props: DiscussionListProps) => {
     const handleClickCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
         setInput(store.dispatch, false);
         setAnchor(store.dispatch, '');
+        setCommentValue('');
     };
 
     const handleClickComment = (e: React.MouseEvent<HTMLButtonElement>) => {
         saveComment(store.dispatch, commentValue);
         setInput(store.dispatch, false);
         setAnchor(store.dispatch, '');
+        setCommentValue('');
     };
+
+    if (props.blockId !== commentsState.anchor && !Object.keys(discussions).length) {
+        return null;
+    }
 
     return (
         <MyBox display="flex" flexDirection="column" padding={2}>
             <MyBox display="flex" flexDirection="column">
-                {Object.keys(discussions).map((key) => {
-                    return <DiscussionCard discussion={discussions[key]} />;
-                })}
+                {Object.values(discussions)
+                    .sort((a, b) => {
+                        return a.created_at - b.created_at;
+                    })
+                    .map((discussion) => {
+                        return <DiscussionCard key={discussion.id} discussion={discussion} />;
+                    })}
             </MyBox>
             {props.blockId === commentsState.anchor && commentsState.isInput && (
                 <MyBox display="flex" flexDirection="column">
-                    <MyBox display="flex" flexDirection="row">
-                        <Avatar
-                            src={userState.profile_photo}
-                            alt={`${userState.given_name} ${userState.family_name}`}
-                        />
+                    <MyBox display="flex" flexDirection="row" p={1}>
+                        <Tooltip title={`${userState.given_name} ${userState.family_name}`}>
+                            <Avatar
+                                src={userState.profile_photo}
+                                alt={`${userState.given_name} ${userState.family_name}`}
+                            />
+                        </Tooltip>
+
                         <MyBox width="10px" />
                         <textarea
                             ref={inputRef}
@@ -85,18 +98,20 @@ export const DiscussionList = (props: DiscussionListProps) => {
                             }}
                         />
                     </MyBox>
-                    <MyBox display="flex" flexDirection="row" justifyContent="flex-end" py={2}>
+                    <MyBox display="flex" flexDirection="row" justifyContent="flex-end" p={1}>
                         <MyButton
                             className="levels-btn-cancel"
                             variant="contained"
                             color="secondary"
                             disableRipple
+                            size="small"
                             onClick={handleClickCancel}
                         >
                             Cancel
                         </MyButton>
 
                         <MyButton
+                            size="small"
                             className="levels-btn-comment"
                             color="primary"
                             variant="contained"

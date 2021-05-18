@@ -18,7 +18,7 @@ export const DiscussionMenu = (props: DiscussionMenuProps) => {
 
     React.useEffect(() => {
         const blockId = getSelectableBlockIdByChild(props.anchor);
-        if (blockId && !commentsState.isInput) {
+        if (blockId) {
             setAnchor(store.dispatch, blockId);
         }
     }, []);

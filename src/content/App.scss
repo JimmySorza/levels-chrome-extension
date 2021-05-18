@@ -1,4 +1,4 @@
-$white: rgba(255, 255, 255, 0.9);
+$white: rgb(241, 238, 238);
 $black: rgba(0, 0, 0, 0.9);
 
 #levels-menu-discussion .MuiSvgIcon-root {
@@ -7,6 +7,15 @@ $black: rgba(0, 0, 0, 0.9);
 
 .levels-btn-cancel {
     margin-right: 20px !important;
+}
+
+#levels-list-discussion-root {
+    textarea {
+        border-radius: 5px;
+        &:focus {
+            border: 1px solid rgb(3, 102, 214);
+        }
+    }
 }
 
 .notion-dark-theme {
@@ -44,7 +53,7 @@ $black: rgba(0, 0, 0, 0.9);
 
     #levels-list-discussion-root {
         textarea {
-            color: $black;
+            color: rgb(210, 210, 210);
             background-color: $white;
         }
         .levels-btn-cancel,

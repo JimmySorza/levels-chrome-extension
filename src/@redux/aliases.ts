@@ -1,6 +1,6 @@
 import { Dispatch } from 'react';
 import { Comment } from 'types';
-import { uniqueId, writeDiscussion, writeUser } from 'utils';
+import { convertIdToKey, uniqueId, writeDiscussion, writeUser } from 'utils';
 import { AppState } from './index';
 
 export const aliases = {
@@ -11,17 +11,17 @@ export const aliases = {
             const comment: Comment = {
                 id: uniqueId(),
                 comment: originalAction.payload,
-                space_id: group.space_id,
+                space_id: convertIdToKey(group?.space_id || ''),
                 block_id: comments.anchor,
-                user_id: user.user_id,
+                user_id: user.id,
                 created_at: Date.now(),
                 updated_at: Date.now(),
             };
             writeDiscussion(comment);
-            dispatch({
+            return {
                 type: originalAction.type,
                 payload: comment,
-            });
+            };
         };
     },
 };

@@ -39,7 +39,6 @@ export const renderComments = (blockId: string, comment: BlockComment = {}) => {
     }
     const buttonRoot = getDiscussionButtonRoot(blockId);
     const listRoot = getDiscussionListRoot(blockId);
-    console.log('~~~~~~~~~~~~ get routes', blockId, buttonRoot, listRoot);
 
     ReactDOM.render(
         <App>

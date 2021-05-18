@@ -6,7 +6,7 @@ import jquery from 'jquery';
 import { sendMessage } from 'utils';
 
 import { setupMenu } from './Menu';
-import { setupAPICallHooks, getStore, onRequest, initStore, setupStorageListener } from './scripts';
+import { getStore, onRequest, initStore, setupStorageListener } from './scripts';
 import { setupDiscussion } from './Discussions';
 import App from './App';
 import { Content } from './Content';
@@ -20,8 +20,6 @@ document.body.appendChild(app);
 const store = getStore();
 
 jquery(() => {
-    setupAPICallHooks();
-
     /**
      * Setup Storage Listener
      */

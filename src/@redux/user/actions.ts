@@ -1,6 +1,7 @@
 import { Dispatch } from 'react';
 import { User } from 'types';
-import { convertIdToKey, localStorage } from 'utils';
+import axios from 'axios';
+import _ from 'lodash';
 
 export type UserAction = {
     type: ActionType;
@@ -10,19 +11,22 @@ export type UserAction = {
 export type ActionType = 'GET_USER';
 
 export const get = (dispatch: Dispatch<UserAction>) => {
-    const userData = localStorage('ajs_user_traits').get() as User;
-
-    const imageKey = `LRU:LocalPreferenceStore3:${convertIdToKey(
-        userData?.user_id || ''
-    )}:PublicSpaceData:${convertIdToKey((userData?.groups || [])[0] || '')}`;
-
-    const imageData = localStorage(imageKey).get();
-
-    return dispatch({
-        type: 'GET_USER',
-        payload: {
-            ...userData,
-            image: imageData?.value?.icon || '',
-        },
-    });
+    axios
+        .post('https://www.notion.so/api/v3/getSpaces', {
+            withCredentials: true,
+        })
+        .then(({ data }: any) => {
+            const user = _.get(Object.values(_.get(Object.values(data)[0], 'notion_user', {}))[0], 'value');
+            dispatch({
+                type: 'GET_USER',
+                payload: user,
+            });
+        })
+        .catch((err) => {
+            dispatch({
+                type: 'GET_USER',
+                payload: {},
+            });
+        });
+    return;
 };

@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 export default (state = initialState, action: CommentAction) => {
     let nextState = {};
+    console.log('~~~~~~~ action', action);
     switch (action.type) {
         case 'SET_INPUT':
             nextState = {

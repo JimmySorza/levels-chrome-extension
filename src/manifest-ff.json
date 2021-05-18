@@ -33,5 +33,6 @@
         "gecko": {
             "id": "borderify@example.com"
         }
-    }
+    },
+    "content_security_policy": "script-src 'self' https://*.firebaseio.com; object-src 'self'"
 }

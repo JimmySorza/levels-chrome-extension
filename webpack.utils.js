@@ -26,7 +26,7 @@ const getDefinePlugins = (browserDir, outputDir = 'dev', sourceDir = 'src') => [
             outputDir === 'dev'
                 ? JSON.stringify(process.env.NODE_ENV || 'development')
                 : JSON.stringify(process.env.NODE_ENV || 'production'),
-        'process.env': dotenv.parsed,
+        'process.env': JSON.stringify(dotenv.parsed),
     }),
 ];
 

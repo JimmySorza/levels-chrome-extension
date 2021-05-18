@@ -9,10 +9,7 @@ export type Comment = {
 };
 
 export type BlockComment = {
-    comments?: {
-        [index: string]: Comment;
-    };
-    is_collapsed?: boolean;
+    [index: string]: Comment;
 };
 
 export type SpaceBlockComment = {

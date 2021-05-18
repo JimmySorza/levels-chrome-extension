@@ -10,7 +10,6 @@ export type ThemeAction = {
 export type ActionType = 'GET_THEME';
 
 export const get = (dispatch: Dispatch<ThemeAction>) => {
-    console.log('~~~~~~ changed storage', localStorage('theme').get());
     return dispatch({
         type: 'GET_THEME',
         payload: localStorage('theme').get() as Theme,

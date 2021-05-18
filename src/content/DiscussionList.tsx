@@ -5,6 +5,7 @@ import { useStore } from 'react-redux';
 import { MyBox, MyButton } from 'components';
 
 import { setAnchor, setInput, setComment } from '@redux/comments/actions';
+import { Avatar } from '@material-ui/core';
 
 export type DiscussionListProps = {
     blockId: string;
@@ -14,6 +15,8 @@ export const DiscussionList = (props: DiscussionListProps) => {
     const inputRef = React.useRef<HTMLTextAreaElement>(null);
     const store = useStore();
     const commentsState = useRedux('comments');
+    const userState = useRedux('user');
+    console.log('~~~~~ commentsState', commentsState);
     const [commentValue, setCommentValue] = React.useState('');
 
     React.useEffect(() => {
@@ -43,7 +46,6 @@ export const DiscussionList = (props: DiscussionListProps) => {
     };
 
     const handleClickCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
-        console.log('~~~~ clicked cancel');
         setInput(store.dispatch, false);
         setAnchor(store.dispatch, '');
     };
@@ -59,7 +61,12 @@ export const DiscussionList = (props: DiscussionListProps) => {
             <MyBox color="success.light">This is comments list</MyBox>
             {props.blockId === commentsState.anchor && commentsState.isInput && (
                 <MyBox display="flex" flexDirection="column">
-                    <MyBox>
+                    <MyBox display="flex" flexDirection="row">
+                        <Avatar
+                            src={userState.profile_photo}
+                            alt={`${userState.given_name} ${userState.family_name}`}
+                        />
+                        <MyBox width="10px" />
                         <textarea
                             ref={inputRef}
                             rows={1}

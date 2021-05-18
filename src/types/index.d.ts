@@ -6,3 +6,4 @@ export * from './user';
 export * from './theme';
 export * from './comment';
 export * from './openControl';
+export * from './collapsed';

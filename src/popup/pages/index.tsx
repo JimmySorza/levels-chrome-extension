@@ -13,7 +13,7 @@ const Pages = () => {
         <Switch>
             <Route component={Auth} path="/auth" />
             <Route component={Dashboard} path="/app" />
-            <Redirect to={userState.user_id ? '/app' : '/auth'} />
+            <Redirect to={userState.id ? '/app' : '/auth'} />
         </Switch>
     );
 };

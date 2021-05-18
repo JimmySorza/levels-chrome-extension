@@ -6,6 +6,7 @@ export default (state = initialState, action: UserAction) => {
     switch (action.type) {
         case 'GET_USER':
             nextState = {
+                ...state,
                 ...action.payload,
             };
             break;

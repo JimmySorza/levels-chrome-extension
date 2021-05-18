@@ -1,6 +1,6 @@
 import { Dispatch } from 'react';
 import { Comment } from 'types';
-import { readDiscussion, uniqueId, writeDiscussion, writeUser } from 'utils';
+import { readDiscussion, readUser, uniqueId, writeDiscussion, writeUser } from 'utils';
 import { AppState } from './index';
 
 export const aliases = {
@@ -37,6 +37,21 @@ export const aliases = {
                 })
                 .catch((err) => {
                     console.log('[=====Error in Alias Get Comment=====]', err);
+                });
+        };
+    },
+
+    'alias@GET_ALL_USER': (originalAction: any) => {
+        return (dispatch: Dispatch<any>, getState: () => AppState) => {
+            readUser()
+                .then((users) => {
+                    dispatch({
+                        type: 'SET_ALL_USER',
+                        payload: users,
+                    });
+                })
+                .catch((err) => {
+                    console.log('[=====Error in Alias Get Users=====]', err);
                 });
         };
     },

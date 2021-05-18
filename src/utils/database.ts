@@ -6,9 +6,13 @@ firebase.initializeApp(firebaseConfig);
 
 export const database = firebase.database();
 
-export const readUser = async (id: string): Promise<User> => {
+export const readUser = async (id: string = ''): Promise<User | { [index: string]: User }> => {
     try {
-        const result = await database.ref(`/user/${id}`).once('value');
+        let refStr = '/user';
+        if (id) {
+            refStr += `/${id}`;
+        }
+        const result = await database.ref(refStr).once('value');
         return result.val();
     } catch (error) {
         console.log('[Database]: Could not read user data', error.toString());
@@ -124,6 +128,20 @@ export const getDiscussionCollapsed = async (
 export const watchDiscussion = (spaceId: string, onChange: (comments: BlockComment) => void) => {
     var blockCommentsRef = firebase.database().ref(`/discussion/${spaceId}`);
     blockCommentsRef.on('value', (snapshot) => {
+        const data = snapshot.val();
+        onChange(data);
+    });
+};
+
+/**
+ * Watch all Users
+ *
+ * @param spaceId
+ * @param onChange
+ */
+export const watchUsers = (onChange: (users: { [index: string]: User }) => void) => {
+    var usersRef = firebase.database().ref(`/user`);
+    usersRef.on('value', (snapshot) => {
         const data = snapshot.val();
         onChange(data);
     });

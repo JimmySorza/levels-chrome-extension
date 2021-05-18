@@ -3,6 +3,7 @@ import { AppState } from './index';
 import { initialState } from './initialState';
 
 import user from './user';
+import users from './users';
 import comments from './comments';
 import theme from './theme';
 import group from './group';
@@ -12,6 +13,7 @@ const { ...emptyInitState } = initialState;
 const createAppReducer = (initialState: AppState) => {
     const appReducer = combineReducers({
         user,
+        users,
         comments,
         theme,
         group,

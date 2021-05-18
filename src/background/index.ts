@@ -1,10 +1,10 @@
 import { browser, Runtime, Tabs, WebNavigation } from 'webextension-polyfill-ts';
 import { wrapStore } from 'webext-redux';
 
-import { Message, SpaceBlockComment } from 'types';
+import { Message, SpaceBlockComment, User } from 'types';
 import store from '@redux/createStore';
 import { AppState } from '@redux';
-import { watchDiscussion } from 'utils';
+import { watchDiscussion, watchUsers } from 'utils';
 
 wrapStore(store);
 
@@ -53,7 +53,7 @@ class Background {
         switch (message.type) {
             case 'ACTIVE_PAGE_ACTION': {
                 browser.pageAction.show(sender.tab?.id || 0);
-                this.setupWatchComment();
+                this.setupWatchData();
                 break;
             }
         }
@@ -72,7 +72,11 @@ class Background {
         );
     };
 
-    setupWatchComment = () => {
+    setupWatchData = () => {
+        // check users change
+        watchUsers(this.onChangeUsers);
+
+        // check comments change
         const { group } = store.getState() as AppState;
         if (group.space_id) {
             watchDiscussion(group.space_id, this.onChangeComments);
@@ -83,6 +87,12 @@ class Background {
         store.dispatch({
             type: 'SET_COMMENT',
             payload: comments,
+        });
+    };
+    onChangeUsers = (users: { [index: string]: User }) => {
+        store.dispatch({
+            type: 'SET_ALL_USER',
+            payload: users,
         });
     };
 }

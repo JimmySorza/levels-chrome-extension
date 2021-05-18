@@ -1,11 +1,14 @@
 import { useRedux } from '@redux';
 import React from 'react';
 import { useStore } from 'react-redux';
+import _ from 'lodash';
 
 import { MyBox, MyButton } from 'components';
 
 import { setAnchor, setInput, saveComment } from '@redux/comments/actions';
 import { Avatar } from '@material-ui/core';
+import { DiscussionCard } from './DiscussionCard';
+import { BlockComment } from 'types';
 
 export type DiscussionListProps = {
     blockId: string;
@@ -18,6 +21,7 @@ export const DiscussionList = (props: DiscussionListProps) => {
     const userState = useRedux('user');
     console.log('~~~~~ commentsState', commentsState);
     const [commentValue, setCommentValue] = React.useState('');
+    const discussions: BlockComment = _.get(commentsState, `data.${props.blockId}`, {});
 
     React.useEffect(() => {
         if (inputRef.current) {
@@ -58,7 +62,11 @@ export const DiscussionList = (props: DiscussionListProps) => {
 
     return (
         <MyBox display="flex" flexDirection="column" padding={2}>
-            <MyBox color="success.light">This is comments list</MyBox>
+            <MyBox display="flex" flexDirection="column">
+                {Object.keys(discussions).map((key) => {
+                    return <DiscussionCard discussion={discussions[key]} />;
+                })}
+            </MyBox>
             {props.blockId === commentsState.anchor && commentsState.isInput && (
                 <MyBox display="flex" flexDirection="column">
                     <MyBox display="flex" flexDirection="row">

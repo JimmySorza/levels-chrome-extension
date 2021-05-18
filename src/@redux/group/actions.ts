@@ -1,6 +1,6 @@
 import { Dispatch } from 'react';
 import { Group } from 'types';
-import { localStorage } from 'utils';
+import { convertIdToKey, localStorage } from 'utils';
 
 export type GroupAction = {
     type: ActionType;
@@ -10,8 +10,13 @@ export type GroupAction = {
 export type ActionType = 'GET_GROUP';
 
 export const get = (dispatch: Dispatch<GroupAction>) => {
+    const groupData = localStorage('ajs_group_properties').get() as Group;
+
     return dispatch({
         type: 'GET_GROUP',
-        payload: localStorage('ajs_group_properties').get() as Group,
+        payload: {
+            ...groupData,
+            space_id: convertIdToKey(groupData.space_id),
+        },
     });
 };

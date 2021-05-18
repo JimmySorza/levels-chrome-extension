@@ -1,6 +1,6 @@
 import { insertString } from './insertString';
 
-export const convertIdToKey = (id: string) => {
+export const convertIdToKey = (id: string = '') => {
     let tmp = insertString(id, 8, '-');
 
     tmp = insertString(tmp, 13, '-');

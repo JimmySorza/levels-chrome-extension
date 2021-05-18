@@ -53,10 +53,7 @@ class Background {
         switch (message.type) {
             case 'ACTIVE_PAGE_ACTION': {
                 browser.pageAction.show(sender.tab?.id || 0);
-                setTimeout(() => {
-                    this.setupWatchComment();
-                }, 5000);
-
+                this.setupWatchComment();
                 break;
             }
         }

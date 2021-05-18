@@ -4,7 +4,7 @@ import { useStore } from 'react-redux';
 
 import { MyBox, MyButton } from 'components';
 
-import { setAnchor, setInput, setComment } from '@redux/comments/actions';
+import { setAnchor, setInput, saveComment } from '@redux/comments/actions';
 import { Avatar } from '@material-ui/core';
 
 export type DiscussionListProps = {
@@ -51,7 +51,7 @@ export const DiscussionList = (props: DiscussionListProps) => {
     };
 
     const handleClickComment = (e: React.MouseEvent<HTMLButtonElement>) => {
-        setComment(store.dispatch, commentValue);
+        saveComment(store.dispatch, commentValue);
         setInput(store.dispatch, false);
         setAnchor(store.dispatch, '');
     };

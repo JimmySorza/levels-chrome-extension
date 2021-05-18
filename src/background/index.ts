@@ -1,8 +1,10 @@
-import { Message } from 'types/message';
 import { browser, Runtime, Tabs, WebNavigation } from 'webextension-polyfill-ts';
 import { wrapStore } from 'webext-redux';
 
+import { Message, SpaceBlockComment } from 'types';
 import store from '@redux/createStore';
+import { AppState } from '@redux';
+import { watchDiscussion } from 'utils';
 
 wrapStore(store);
 
@@ -51,6 +53,10 @@ class Background {
         switch (message.type) {
             case 'ACTIVE_PAGE_ACTION': {
                 browser.pageAction.show(sender.tab?.id || 0);
+                setTimeout(() => {
+                    this.setupWatchComment();
+                }, 5000);
+
                 break;
             }
         }
@@ -67,6 +73,20 @@ class Background {
                 resolve(response);
             })
         );
+    };
+
+    setupWatchComment = () => {
+        const { group } = store.getState() as AppState;
+        if (group.space_id) {
+            watchDiscussion(group.space_id, this.onChangeComments);
+        }
+    };
+
+    onChangeComments = (comments: SpaceBlockComment) => {
+        store.dispatch({
+            type: 'SET_COMMENT',
+            payload: comments,
+        });
     };
 }
 

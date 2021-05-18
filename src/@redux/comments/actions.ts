@@ -1,13 +1,12 @@
 import { initStore } from 'content/scripts';
 import { Dispatch } from 'react';
-import initialState from './initialState';
 
 export type CommentAction = {
     type: ActionType;
     payload?: any;
 };
 
-export type ActionType = 'SET_INPUT' | 'SET_ANCHOR' | 'SET_COMMENT';
+export type ActionType = 'SET_INPUT' | 'SET_ANCHOR' | 'SAVE_COMMENT' | 'SET_COMMENT';
 
 export const setInput = (dispatch: Dispatch<CommentAction>, status: boolean) => {
     return dispatch({
@@ -23,8 +22,15 @@ export const setAnchor = (dispatch: Dispatch<CommentAction>, el: string) => {
     });
 };
 
-export const setComment = (dispatch: Dispatch<CommentAction>, comment: string) => {
+export const saveComment = (dispatch: Dispatch<CommentAction>, comment: string) => {
     initStore();
+    return dispatch({
+        type: 'SAVE_COMMENT',
+        payload: comment,
+    });
+};
+
+export const setComment = (dispatch: Dispatch<CommentAction>, comment: string) => {
     return dispatch({
         type: 'SET_COMMENT',
         payload: comment,

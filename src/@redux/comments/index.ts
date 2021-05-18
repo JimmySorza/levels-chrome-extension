@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 export default (state = initialState, action: CommentAction) => {
     let nextState = {};
-    console.log('~~~~~~~ action', action);
+
     switch (action.type) {
         case 'SET_INPUT':
             nextState = {
@@ -19,16 +19,11 @@ export default (state = initialState, action: CommentAction) => {
             };
             break;
         case 'SET_COMMENT':
-            const blockId: string = action.payload['block_id'];
-            console.log('~~~~~~~~ setting comment reducer', action, blockId);
-            const originalComments = _.get(state, `data.${blockId}.comments`, []);
-            originalComments.push(action.payload);
-            _.set(state, `data.${blockId}.comments`, originalComments);
-            console.log('~~~~ state', state);
             nextState = {
                 ...state,
+                data: action.payload,
             };
-            return nextState;
+            break;
         default:
             nextState = state;
     }

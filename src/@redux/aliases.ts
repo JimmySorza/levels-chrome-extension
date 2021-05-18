@@ -1,10 +1,10 @@
 import { Dispatch } from 'react';
-import { Comment } from 'types';
-import { convertIdToKey, uniqueId, writeDiscussion, writeUser } from 'utils';
+import { BlockComment, Comment, SpaceBlockComment } from 'types';
+import { convertIdToKey, uniqueId, watchDiscussion, writeDiscussion, writeUser } from 'utils';
 import { AppState } from './index';
 
 export const aliases = {
-    SET_COMMENT: (originalAction: any) => {
+    SAVE_COMMENT: (originalAction: any) => {
         return (dispatch: Dispatch<any>, getState: () => AppState) => {
             const { user, group, comments } = getState();
             writeUser(user);

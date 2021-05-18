@@ -1,6 +1,6 @@
 import { Dispatch } from 'react';
-import { BlockComment, Comment, SpaceBlockComment } from 'types';
-import { convertIdToKey, readDiscussion, uniqueId, watchDiscussion, writeDiscussion, writeUser } from 'utils';
+import { Comment } from 'types';
+import { readDiscussion, uniqueId, writeDiscussion, writeUser } from 'utils';
 import { AppState } from './index';
 
 export const aliases = {
@@ -30,7 +30,6 @@ export const aliases = {
             const spaceId: string = originalAction.payload;
             readDiscussion(spaceId)
                 .then((comments) => {
-                    console.log('~~~~ read', comments);
                     dispatch({
                         type: 'SET_COMMENT',
                         payload: comments,

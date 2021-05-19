@@ -1,4 +1,4 @@
-import { StorageKey } from 'types';
+import { StorageKey } from 'types/storage';
 
 /**
  * Storage

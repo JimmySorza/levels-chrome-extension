@@ -1,5 +1,6 @@
 import { browser, Runtime, Tabs } from 'webextension-polyfill-ts';
-import { Message, Response } from 'types';
+import { Message } from 'types/message';
+import { Response } from 'types/response';
 
 /**
  * Send Message to Background Script

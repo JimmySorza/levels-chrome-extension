@@ -1,5 +1,6 @@
 import { Runtime } from 'webextension-polyfill-ts';
-import { Message, Response } from 'types';
+import { Message } from 'types/message';
+import { Response } from 'types/response';
 import { getUserId } from 'utils/getUserId';
 
 export const onRequest = async (msg: Message, sender: Runtime.SendMessageOptionsType): Promise<Response> => {

@@ -16,7 +16,7 @@ export const DiscussionCard = (props: DiscussionCardProps) => {
     const userInfo: User = _.get(usersState, props?.discussion?.user_id || '', {});
 
     return (
-        <MyBox display="flex" flexDirection="row" alignItems="center" p={1}>
+        <MyBox display="flex" flexDirection="row" alignItems="flex-start" p={1}>
             <Tooltip title={`${userInfo?.given_name || ''} ${userInfo?.family_name || ''}`}>
                 <Avatar
                     src={userInfo.profile_photo}
@@ -26,7 +26,7 @@ export const DiscussionCard = (props: DiscussionCardProps) => {
             </Tooltip>
 
             <MyBox width="10px" />
-            <MyBox>{props?.discussion?.comment || ''}</MyBox>
+            <MyBox style={{ whiteSpace: 'pre-wrap' }}>{props?.discussion?.comment || ''}</MyBox>
         </MyBox>
     );
 };

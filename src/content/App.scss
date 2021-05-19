@@ -16,6 +16,10 @@ $black: rgba(0, 0, 0, 0.9);
             border: 1px solid rgb(3, 102, 214);
         }
     }
+    .MuiAvatar-root {
+        width: 30px;
+        height: 30px;
+    }
 }
 
 .notion-dark-theme {
@@ -53,7 +57,7 @@ $black: rgba(0, 0, 0, 0.9);
 
     #levels-list-discussion-root {
         textarea {
-            color: rgb(210, 210, 210);
+            color: $black;
             background-color: $white;
         }
         .levels-btn-cancel,

@@ -12,8 +12,8 @@ export const aliases = {
                 id: uniqueId(),
                 comment: originalAction.payload,
                 space_id: group?.space_id || '',
-                block_id: comments.anchor,
-                user_id: user.id,
+                block_id: comments?.anchor || '',
+                user_id: user?.id || '',
                 created_at: Date.now(),
                 updated_at: Date.now(),
             };

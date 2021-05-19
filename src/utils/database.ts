@@ -58,7 +58,7 @@ export const readDiscussion = async (
     }
 };
 
-export const writeDiscussion = async (comment: Comment = {}): Promise<void> => {
+export const writeDiscussion = async (comment: Comment): Promise<void> => {
     try {
         if (!comment.space_id) {
             throw `Could not write discussion because space Id is Empty!`;
@@ -70,25 +70,6 @@ export const writeDiscussion = async (comment: Comment = {}): Promise<void> => {
             throw `Could not write discussion because comment Id is Empty!`;
         }
         database.ref(`/discussion/${comment.space_id}/${comment.block_id}/${comment.id}`).set(comment);
-        return;
-    } catch (error) {
-        throw error;
-    }
-};
-
-export const setDiscussionCollapsed = (userId: string, spaceId: string, blockId: string, status: boolean) => {
-    try {
-        if (!userId) {
-            throw `Could not write discussion because user Id is Empty!`;
-        }
-        if (!spaceId) {
-            throw `Could not write discussion because space Id is Empty!`;
-        }
-        if (!blockId) {
-            throw `Could not write discussion because block Id is Empty!`;
-        }
-
-        database.ref(`/collapsed/${userId}/${spaceId}/${blockId}`).set(status);
         return;
     } catch (error) {
         throw error;
@@ -125,7 +106,7 @@ export const getDiscussionCollapsed = async (
  * @param spaceId
  * @param onChange
  */
-export const watchDiscussion = (spaceId: string, onChange: (comments: BlockComment) => void) => {
+export const watchDiscussion = (spaceId: string, onChange: (comments: SpaceBlockComment) => void) => {
     var blockCommentsRef = firebase.database().ref(`/discussion/${spaceId}`);
     blockCommentsRef.on('value', (snapshot) => {
         const data = snapshot.val();

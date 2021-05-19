@@ -2,9 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import jquery from 'jquery';
 
-import { AppState } from '@redux';
-import { getMenuCommentEl, getPageContentEl, getStore, LEVELS_MENU_DISCUSSION_ID } from './scripts';
-import { DiscussionMenu } from 'components';
+// import { AppState } from '@redux';
+import { getMenuCommentEl, getPageContentEl } from './scripts/selectors';
+// import { getStore } from './scripts/getStore';
+import { LEVELS_MENU_DISCUSSION_ID } from './scripts/constant';
+import DiscussionMenu from './DiscussionMenu';
 import { asyncTimeOut } from 'utils/asyncTimeout';
 import App from './App';
 
@@ -22,8 +24,8 @@ const renderMenu = async (e: any) => {
 
     await asyncTimeOut(200);
 
-    const store = getStore();
-    const appState: AppState = store.getState();
+    // const store = getStore();
+    // const appState: AppState = store.getState();
 
     const discussionMenuEl = document.createElement('div');
     discussionMenuEl.id = LEVELS_MENU_DISCUSSION_ID;

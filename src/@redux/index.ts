@@ -1,8 +1,5 @@
-import reducer from './rootReducer';
 import { initialState } from './initialState';
 import { useSelector } from 'react-redux';
-
-export const rootReducer = reducer;
 
 export type AppState = typeof initialState;
 

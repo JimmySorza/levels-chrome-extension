@@ -4,6 +4,8 @@ export type DiscussionButtonProps = {
     blockId: string;
 };
 
-export const DiscussionButton = (props: DiscussionButtonProps) => {
+const DiscussionButton = (props: DiscussionButtonProps) => {
     return <div></div>;
 };
+
+export default React.memo(DiscussionButton);

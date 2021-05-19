@@ -4,17 +4,14 @@ import { useStore } from 'react-redux';
 
 import { getSelectableBlockIdByChild, getOverlayEl } from 'content/scripts/selectors';
 import { setAnchor, setInput } from '@redux/comments/actions';
-import { MyBox } from './MyBox';
-import { useRedux } from '@redux';
-import jquery from 'jquery';
+import MyBox from '../components/MyBox';
 
 export type DiscussionMenuProps = {
     anchor: HTMLElement;
 };
 
-export const DiscussionMenu = (props: DiscussionMenuProps) => {
+const DiscussionMenu = (props: DiscussionMenuProps) => {
     const store = useStore();
-    const commentsState = useRedux('comments');
 
     React.useEffect(() => {
         const blockId = getSelectableBlockIdByChild(props.anchor);
@@ -23,10 +20,10 @@ export const DiscussionMenu = (props: DiscussionMenuProps) => {
         }
     }, []);
 
-    const handleClickDiscussion = () => {
+    const handleClickDiscussion = React.useCallback(() => {
         setInput(store.dispatch, true);
         getOverlayEl().click();
-    };
+    }, [store]);
 
     return (
         <MyBox
@@ -50,3 +47,5 @@ export const DiscussionMenu = (props: DiscussionMenuProps) => {
         </MyBox>
     );
 };
+
+export default React.memo(DiscussionMenu);

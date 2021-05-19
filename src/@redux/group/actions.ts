@@ -1,5 +1,5 @@
 import { Dispatch } from 'react';
-import { Group } from 'types';
+import { Group } from 'types/group';
 import { convertIdToKey } from 'utils/convertIdToKey';
 import localStorage from 'utils/localStorage';
 

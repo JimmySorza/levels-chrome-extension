@@ -3,10 +3,11 @@ import ReactDOM from 'react-dom';
 import _ from 'lodash';
 import jquery from 'jquery';
 
-import { BlockComment } from 'types';
-import { getDiscussionButtonRoot, getDiscussionListRoot, getSelectableBlocks, getStore } from './scripts';
-import { DiscussionButton } from './DiscussionButton';
-import { DiscussionList } from './DiscussionList';
+import { BlockComment } from 'types/comment';
+import { getDiscussionButtonRoot, getDiscussionListRoot, getSelectableBlocks } from './scripts/selectors';
+// import { getStore } from './scripts/getStore';
+import DiscussionButton from './DiscussionButton';
+import DiscussionList from './DiscussionList';
 import App from './App';
 
 let observer;

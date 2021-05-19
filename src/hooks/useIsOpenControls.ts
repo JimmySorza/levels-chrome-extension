@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { OpenControls } from 'types';
+import { OpenControls } from 'types/openControl';
 
 /**
  * Open State React Hooks

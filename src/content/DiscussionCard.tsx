@@ -2,16 +2,17 @@ import React from 'react';
 import _ from 'lodash';
 
 import { Avatar, Tooltip } from '@material-ui/core';
-import { MyBox } from 'components';
+import MyBox from 'components/MyBox';
 
-import { Comment, User } from 'types';
+import { Comment } from 'types/comment';
+import { User } from 'types/user';
 import { useRedux } from '@redux';
 
 export type DiscussionCardProps = {
     discussion: Comment;
 };
 
-export const DiscussionCard = (props: DiscussionCardProps) => {
+const DiscussionCard = (props: DiscussionCardProps) => {
     const usersState = useRedux('users');
     const userInfo: User = _.get(usersState, props?.discussion?.user_id || '', {});
 
@@ -30,3 +31,5 @@ export const DiscussionCard = (props: DiscussionCardProps) => {
         </MyBox>
     );
 };
+
+export default React.memo(DiscussionCard);

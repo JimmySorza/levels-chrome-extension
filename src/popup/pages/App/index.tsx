@@ -1,4 +1,3 @@
-// Libraries
 import React from 'react';
 import { Route, Switch, Redirect, RouteComponentProps } from 'react-router-dom';
 import PageHome from './Home';

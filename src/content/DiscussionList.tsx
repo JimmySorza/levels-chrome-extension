@@ -1,20 +1,21 @@
-import { useRedux } from '@redux';
 import React from 'react';
 import { useStore } from 'react-redux';
 import _ from 'lodash';
+import { Avatar, Tooltip } from '@material-ui/core';
 
-import { MyBox, MyButton } from 'components';
+import MyBox from 'components/MyBox';
+import MyButton from 'components/MyButton';
+import { useRedux } from '@redux';
 
 import { setAnchor, setInput, saveComment } from '@redux/comments/actions';
-import { Avatar, Tooltip } from '@material-ui/core';
-import { DiscussionCard } from './DiscussionCard';
-import { BlockComment } from 'types';
+import DiscussionCard from './DiscussionCard';
+import { BlockComment } from 'types/comment';
 
 export type DiscussionListProps = {
     blockId: string;
 };
 
-export const DiscussionList = (props: DiscussionListProps) => {
+const DiscussionList = (props: DiscussionListProps) => {
     const inputRef = React.useRef<HTMLTextAreaElement>(null);
     const store = useStore();
     const commentsState = useRedux('comments');
@@ -133,3 +134,5 @@ export const DiscussionList = (props: DiscussionListProps) => {
         </MyBox>
     );
 };
+
+export default React.memo(DiscussionList);

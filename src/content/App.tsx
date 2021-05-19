@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 
-import { getStore } from './scripts';
+import { getStore } from './scripts/getStore';
 
 export type AppProps = {
     children: React.ReactNode;

@@ -6,7 +6,7 @@ export type MyButtonProps = ButtonProps & {
     children: React.ReactNode;
 };
 
-export const MyButton = ({ children, ...restProps }: MyButtonProps) => {
+const MyButton = ({ children, ...restProps }: MyButtonProps) => {
     const theme = React.useMemo(
         () =>
             createMuiTheme({
@@ -24,3 +24,5 @@ export const MyButton = ({ children, ...restProps }: MyButtonProps) => {
         </ThemeProvider>
     );
 };
+
+export default React.memo(MyButton);

@@ -1,7 +1,9 @@
 import { browser, Runtime, Tabs } from 'webextension-polyfill-ts';
 import { wrapStore } from 'webext-redux';
 
-import { Message, SpaceBlockComment, User } from 'types';
+import { Message } from 'types/message';
+import { SpaceBlockComment } from 'types/comment';
+import { User } from 'types/user';
 import store from '@redux/createStore';
 import { AppState } from '@redux';
 import { watchDiscussion, watchUsers } from 'utils/database';

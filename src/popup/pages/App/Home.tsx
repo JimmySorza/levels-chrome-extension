@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Typography, Divider } from '@material-ui/core';
-import { MyBox } from 'components';
+import MyBox from 'components/MyBox';
 
 export const PageHome = () => {
     return (

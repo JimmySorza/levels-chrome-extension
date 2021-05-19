@@ -1,6 +1,5 @@
 import { CommentAction } from './actions';
 import initialState from './initialState';
-import _ from 'lodash';
 
 export default (state = initialState, action: CommentAction) => {
     let nextState = {};

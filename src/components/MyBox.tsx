@@ -14,6 +14,8 @@ import {
     grid,
 } from '@material-ui/system';
 
-export const MyBox = styled('div')(
+const MyBox = styled('div')(
     compose(grid, spacing, palette, border, display, flexbox, positions, shadows, sizing, typography)
 );
+
+export default React.memo(MyBox);

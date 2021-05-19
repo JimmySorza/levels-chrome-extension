@@ -1,4 +1,4 @@
-import { initStore } from 'content/scripts';
+import { initStore } from 'content/scripts/initStore';
 import { Dispatch } from 'react';
 
 export type CommentAction = {

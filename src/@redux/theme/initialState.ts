@@ -1,4 +1,4 @@
-import { Theme } from 'types';
+import { Theme } from 'types/theme';
 
 const initialState: Theme = {};
 

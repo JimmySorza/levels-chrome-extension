@@ -1,5 +1,5 @@
 import { Dispatch } from 'react';
-import { Theme } from 'types';
+import { Theme } from 'types/theme';
 import localStorage from 'utils/localStorage';
 
 export type ThemeAction = {

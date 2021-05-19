@@ -1,5 +1,5 @@
 import { Dispatch } from 'react';
-import { Comment } from 'types';
+import { Comment } from 'types/comment';
 import { readDiscussion, readUser, writeDiscussion, writeUser } from 'utils/database';
 import { uniqueId } from 'utils/uniqueId';
 import { AppState } from './index';

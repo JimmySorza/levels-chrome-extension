@@ -5,7 +5,7 @@ import { spacing } from '@material-ui/system';
 import { styled } from '@material-ui/core/styles';
 import MuiButton from '@material-ui/core/Button';
 
-import { MyBox } from 'components';
+import MyBox from 'components/MyBox';
 
 const Button = styled(MuiButton)(spacing);
 

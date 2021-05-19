@@ -6,7 +6,10 @@ import jquery from 'jquery';
 import { sendMessage } from 'utils/sendMessages';
 
 import { setupMenu } from './Menu';
-import { getStore, onRequest, initStore, setupStorageListener } from './scripts';
+import { setupStorageListener } from './scripts/setupStorageListener';
+import { onRequest } from './scripts/setupMessageListener';
+import { initStore } from './scripts/initStore';
+import { getStore } from './scripts/getStore';
 import { setupDiscussion } from './Discussions';
 import App from './App';
 import { Content } from './Content';

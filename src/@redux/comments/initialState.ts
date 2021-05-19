@@ -1,4 +1,4 @@
-import { SpaceBlockComment } from 'types';
+import { SpaceBlockComment } from 'types/comment';
 
 const initialState: {
     isInput?: boolean;

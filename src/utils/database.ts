@@ -1,5 +1,7 @@
 import firebase from 'firebase/app';
-import { BlockComment, SpaceBlockComment, User, Comment, BlockCollapsed, SpaceBlockCollapsed } from 'types';
+import { BlockComment, SpaceBlockComment, Comment } from 'types/comment';
+import { BlockCollapsed, SpaceBlockCollapsed } from 'types/collapsed';
+import { User } from 'types/user';
 import { firebaseConfig } from './config';
 import 'firebase/database';
 firebase.initializeApp(firebaseConfig);

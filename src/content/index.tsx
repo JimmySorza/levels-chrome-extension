@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { browser } from 'webextension-polyfill-ts';
 import jquery from 'jquery';
 
-import { sendMessage } from 'utils';
+import { sendMessage } from 'utils/sendMessages';
 
 import { setupMenu } from './Menu';
 import { getStore, onRequest, initStore, setupStorageListener } from './scripts';

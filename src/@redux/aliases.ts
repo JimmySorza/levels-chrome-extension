@@ -1,6 +1,7 @@
 import { Dispatch } from 'react';
 import { Comment } from 'types';
-import { readDiscussion, readUser, uniqueId, writeDiscussion, writeUser } from 'utils';
+import { readDiscussion, readUser, writeDiscussion, writeUser } from 'utils/database';
+import { uniqueId } from 'utils/uniqueId';
 import { AppState } from './index';
 
 export const aliases = {

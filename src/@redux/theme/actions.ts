@@ -1,6 +1,6 @@
 import { Dispatch } from 'react';
 import { Theme } from 'types';
-import { localStorage } from 'utils';
+import localStorage from 'utils/localStorage';
 
 export type ThemeAction = {
     type: ActionType;

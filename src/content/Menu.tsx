@@ -5,7 +5,7 @@ import jquery from 'jquery';
 import { AppState } from '@redux';
 import { getMenuCommentEl, getPageContentEl, getStore, LEVELS_MENU_DISCUSSION_ID } from './scripts';
 import { DiscussionMenu } from 'components';
-import { asyncTimeOut } from 'utils';
+import { asyncTimeOut } from 'utils/asyncTimeout';
 import App from './App';
 
 export const setupMenu = () => {

@@ -9,6 +9,7 @@ const {
     getEntry,
     getResolves,
     getDefinePlugins,
+    getAnalyzerPlugin,
 } = require('./webpack.utils');
 const config = require('./config.json');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -67,6 +68,7 @@ module.exports = [
             ...getHTMLPlugins('chrome', config.tempDirectory, config.chromePath),
             ...getCopyPlugins('chrome', config.tempDirectory, config.chromePath),
             getZipPlugin('chrome', config.distDirectory),
+            ...getAnalyzerPlugin('chrome', config.distDirectory),
         ],
     },
     {
@@ -77,10 +79,11 @@ module.exports = [
             new webpack.ProgressPlugin(),
             new CleanWebpackPlugin(),
             new ESLintPlugin(eslintOptions),
-            ...getDefinePlugins('opera', config.tempDirectory, config.chromePath),
+            ...getDefinePlugins('opera', config.tempDirectory, config.operaPath),
             ...getHTMLPlugins('opera', config.tempDirectory, config.operaPath),
             ...getCopyPlugins('opera', config.tempDirectory, config.operaPath),
             getZipPlugin('opera', config.distDirectory),
+            ...getAnalyzerPlugin('opera', config.distDirectory),
         ],
     },
     {
@@ -91,10 +94,11 @@ module.exports = [
             new webpack.ProgressPlugin(),
             new CleanWebpackPlugin(),
             new ESLintPlugin(eslintOptions),
-            ...getDefinePlugins('firefox', config.tempDirectory, config.chromePath),
+            ...getDefinePlugins('firefox', config.tempDirectory, config.firefoxPath),
             ...getHTMLPlugins('firefox', config.tempDirectory, config.firefoxPath),
             ...getFirefoxCopyPlugins('firefox', config.tempDirectory, config.firefoxPath),
             getZipPlugin('firefox', config.distDirectory),
+            ...getAnalyzerPlugin('firefox', config.distDirectory),
         ],
     },
 ];

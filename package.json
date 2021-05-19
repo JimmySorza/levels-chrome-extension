@@ -6,6 +6,7 @@
     "scripts": {
         "start": "webpack --config webpack.config.dev.js",
         "watch": "webpack --config webpack.config.dev.js --watch",
+        "profile": "webpack --config webpack.config.profile.js",
         "build": "webpack --config webpack.config.prod.js",
         "lint-fix": "eslint --ext js,jsx,ts,tsx, src --fix"
     },
@@ -62,6 +63,7 @@
         "zip-webpack-plugin": "^4.0.1"
     },
     "devDependencies": {
-        "prettier": "^2.2.1"
+        "prettier": "^2.2.1",
+        "webpack-bundle-analyzer": "^4.4.2"
     }
 }

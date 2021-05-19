@@ -1,10 +1,10 @@
-import { browser, Runtime, Tabs, WebNavigation } from 'webextension-polyfill-ts';
+import { browser, Runtime, Tabs } from 'webextension-polyfill-ts';
 import { wrapStore } from 'webext-redux';
 
 import { Message, SpaceBlockComment, User } from 'types';
 import store from '@redux/createStore';
 import { AppState } from '@redux';
-import { watchDiscussion, watchUsers } from 'utils';
+import { watchDiscussion, watchUsers } from 'utils/database';
 
 wrapStore(store);
 

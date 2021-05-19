@@ -1,6 +1,7 @@
 import { Dispatch } from 'react';
 import { Group } from 'types';
-import { convertIdToKey, localStorage } from 'utils';
+import { convertIdToKey } from 'utils/convertIdToKey';
+import localStorage from 'utils/localStorage';
 
 export type GroupAction = {
     type: ActionType;

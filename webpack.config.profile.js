@@ -7,6 +7,7 @@ const {
     getEntry,
     getResolves,
     getDefinePlugins,
+    getAnalyzerPlugin,
 } = require('./webpack.utils');
 const webpack = require('webpack');
 
@@ -63,6 +64,7 @@ module.exports = [
             ...getDefinePlugins('chrome', config.devDirectory, config.chromePath),
             ...getHTMLPlugins('chrome', config.devDirectory, config.chromePath),
             ...getCopyPlugins('chrome', config.devDirectory, config.chromePath),
+            ...getAnalyzerPlugin('chrome', config.devDirectory),
         ],
     },
     {
@@ -75,6 +77,7 @@ module.exports = [
             ...getDefinePlugins('opera', config.devDirectory, config.operaPath),
             ...getHTMLPlugins('opera', config.devDirectory, config.operaPath),
             ...getCopyPlugins('opera', config.devDirectory, config.operaPath),
+            ...getAnalyzerPlugin('opera', config.devDirectory),
         ],
     },
     {
@@ -87,6 +90,7 @@ module.exports = [
             ...getDefinePlugins('firefox', config.devDirectory, config.firefoxPath),
             ...getFirefoxCopyPlugins('firefox', config.devDirectory, config.firefoxPath),
             ...getHTMLPlugins('firefox', config.devDirectory, config.firefoxPath),
+            ...getAnalyzerPlugin('firefox', config.devDirectory),
         ],
     },
 ];

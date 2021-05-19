@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ZipPlugin = require('zip-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const path = require('path');
 const dotenv = require('dotenv').config({ path: __dirname + '/.env' });
 
@@ -101,6 +102,16 @@ const getZipPlugin = (browserDir, outputDir = 'dist') =>
         },
     });
 
+const getAnalyzerPlugin = (browserDir, outputDir = 'dist') => {
+    return [
+        new BundleAnalyzerPlugin({
+            analyzerMode: 'static',
+            generateStatsFile: true,
+            statsFilename: `/${outputDir}/${browserDir}.html`,
+        }),
+    ];
+};
+
 const getResolves = () => {
     return {
         alias: {
@@ -128,4 +139,5 @@ module.exports = {
     getEntry,
     getResolves,
     getDefinePlugins,
+    getAnalyzerPlugin,
 };

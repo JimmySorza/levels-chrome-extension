@@ -3,7 +3,7 @@ import { getComment } from '@redux/comments/actions';
 import { getAllUser } from '@redux/users/actions';
 import React from 'react';
 import { useStore } from 'react-redux';
-import { sendMessage } from 'utils';
+import { sendMessage } from 'utils/sendMessages';
 
 export const Content = () => {
     const group = useRedux('group');

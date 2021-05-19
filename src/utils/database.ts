@@ -77,7 +77,7 @@ export const writeDiscussion = async (comment: Comment): Promise<void> => {
     }
 };
 
-export const getDiscussionCollapsed = async (
+export const readDiscussionCollapsed = async (
     userId: string,
     spaceId: string,
     blockId?: string
@@ -101,7 +101,7 @@ export const getDiscussionCollapsed = async (
     }
 };
 
-export const setDiscussionCollapsed = async (
+export const writeDiscussionCollapsed = async (
     userId: string,
     spaceId: string,
     blockId: string,

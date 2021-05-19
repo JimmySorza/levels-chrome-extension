@@ -1,5 +1,5 @@
 import React from 'react';
-import SmsIcon from '@material-ui/icons/Sms';
+import SmsOutlinedIcon from '@material-ui/icons/SmsOutlined';
 import { useStore } from 'react-redux';
 
 import { getSelectableBlockIdByChild, getOverlayEl } from 'content/scripts/selectors';
@@ -41,7 +41,7 @@ const DiscussionMenu = (props: DiscussionMenuProps) => {
             onClick={handleClickDiscussion}
         >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: '14px' }}>
-                <SmsIcon fontSize="small" color="primary" />
+                <SmsOutlinedIcon fontSize="small" color="primary" />
             </div>
             <div style={{ marginLeft: '6px', marginRight: '14px', minWidth: '0px', flex: '1 1 auto' }}>Discussion</div>
         </MyBox>

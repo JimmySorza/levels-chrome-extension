@@ -1,10 +1,22 @@
 import { Dispatch } from 'react';
 import { Comment } from 'types/comment';
-import { readDiscussion, readUser, writeDiscussion, writeUser } from 'utils/database';
+import {
+    readDiscussion,
+    readUser,
+    writeDiscussion,
+    writeUser,
+    readDiscussionCollapsed,
+    writeDiscussionCollapsed,
+} from 'utils/database';
 import { uniqueId } from 'utils/uniqueId';
 import { AppState } from './index';
 
 export const aliases = {
+    /**
+     * Save Comment
+     * @param originalAction
+     * @returns
+     */
     'alias@SAVE_COMMENT': (originalAction: any) => {
         return (dispatch: Dispatch<any>, getState: () => AppState) => {
             const { user, group, comments } = getState();
@@ -26,6 +38,11 @@ export const aliases = {
         };
     },
 
+    /**
+     * Get All Comments
+     * @param originalAction
+     * @returns
+     */
     'alias@GET_COMMENT': (originalAction: any) => {
         return (dispatch: Dispatch<any>, getState: () => AppState) => {
             const spaceId: string = originalAction.payload;
@@ -42,6 +59,11 @@ export const aliases = {
         };
     },
 
+    /**
+     * Get All users
+     * @param originalAction
+     * @returns
+     */
     'alias@GET_ALL_USER': (originalAction: any) => {
         return (dispatch: Dispatch<any>, getState: () => AppState) => {
             readUser()
@@ -53,6 +75,49 @@ export const aliases = {
                 })
                 .catch((err) => {
                     console.log('[=====Error in Alias Get Users=====]', err);
+                });
+        };
+    },
+
+    /**
+     * Get Collapse Info from database
+     * @param originalAction
+     * @returns
+     */
+    'alias@GET_COLLAPSE': (originalAction: any) => {
+        return (dispatch: Dispatch<any>, getState: () => AppState) => {
+            const { space_id = '', user_id = '' } = originalAction.payload;
+            readDiscussionCollapsed(user_id, space_id)
+                .then((collapsed) => {
+                    dispatch({
+                        type: 'SET_COLLAPSE',
+                        payload: collapsed,
+                    });
+                })
+                .catch((err) => {
+                    console.log('[=====Error in Alias Get Collapse Info=====]', err);
+                });
+        };
+    },
+
+    /**
+     * Save Collapse Info from database
+     * @param originalAction
+     * @returns
+     */
+    'alias@SAVE_COLLAPSE': (originalAction: any) => {
+        return (dispatch: Dispatch<any>, getState: () => AppState) => {
+            const { space_id = '', user_id = '', block_id = '', status = false } = originalAction.payload;
+            writeDiscussionCollapsed(user_id, space_id, block_id, status);
+            readDiscussionCollapsed(user_id, space_id)
+                .then((collapsed) => {
+                    dispatch({
+                        type: 'SET_COLLAPSE',
+                        payload: collapsed,
+                    });
+                })
+                .catch((err) => {
+                    console.log('[=====Error in Alias Get Collapse Info=====]', err);
                 });
         };
     },

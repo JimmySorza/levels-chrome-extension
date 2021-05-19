@@ -22,6 +22,18 @@ $black: rgba(0, 0, 0, 0.9);
     }
 }
 
+#levels-btn-discussion-root {
+    width: 0px;
+    height: 0px;
+    position: relative;
+    color: #a2a2a1;
+    svg {
+        margin-right: 3px;
+        font-size: 16px;
+        color: #a2a2a1;
+    }
+}
+
 .notion-dark-theme {
     #levels-menu-discussion {
         box-shadow: rgba(255, 255, 255, 0.07) 0px -1px 0px;
@@ -36,9 +48,11 @@ $black: rgba(0, 0, 0, 0.9);
             background-color: $black;
         }
 
-        .levels-btn-cancel,
-        .levels-btn-comment,
         .levels-btn-collapse {
+            color: $black;
+        }
+        .levels-btn-cancel,
+        .levels-btn-comment {
             text-transform: none;
             color: $white;
         }
@@ -62,9 +76,11 @@ $black: rgba(0, 0, 0, 0.9);
             color: $black;
             background-color: $white;
         }
-        .levels-btn-cancel,
-        .levels-btn-comment,
         .levels-btn-collapse {
+            color: $white;
+        }
+        .levels-btn-cancel,
+        .levels-btn-comment {
             text-transform: none;
             color: $black;
         }

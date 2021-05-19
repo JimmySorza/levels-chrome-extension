@@ -1,15 +1,17 @@
 import React from 'react';
-import { useStore } from 'react-redux';
+import { useStore, useSelector } from 'react-redux';
 import _ from 'lodash';
 import { Avatar, Tooltip } from '@material-ui/core';
 
 import MyBox from 'components/MyBox';
 import MyButton from 'components/MyButton';
-import { useRedux } from '@redux';
+import { AppState, useRedux } from '@redux';
 
 import { setAnchor, setInput, saveComment } from '@redux/comments/actions';
 import DiscussionCard from './DiscussionCard';
 import { BlockComment } from 'types/comment';
+import { saveCollapse } from '@redux/collapse/actions';
+import user from '@redux/user';
 
 export type DiscussionListProps = {
     blockId: string;
@@ -20,6 +22,8 @@ const DiscussionList = (props: DiscussionListProps) => {
     const store = useStore();
     const commentsState = useRedux('comments');
     const userState = useRedux('user');
+    const groupState = useRedux('group');
+    const collapsedState = useSelector((state: AppState) => state.collapse[props.blockId]);
 
     const [commentValue, setCommentValue] = React.useState('');
     const discussions: BlockComment = _.get(commentsState, `data.${props.blockId}`, {});
@@ -63,6 +67,15 @@ const DiscussionList = (props: DiscussionListProps) => {
         setCommentValue('');
     };
 
+    const handleClickCollapse = (e: React.MouseEvent<HTMLButtonElement>) => {
+        saveCollapse(store.dispatch, {
+            user_id: userState.id,
+            space_id: groupState.space_id,
+            block_id: props.blockId,
+            status: !collapsedState,
+        });
+    };
+
     if (props.blockId !== commentsState.anchor && !Object.keys(discussions).length) {
         return null;
     }
@@ -70,15 +83,17 @@ const DiscussionList = (props: DiscussionListProps) => {
     return (
         <MyBox display="flex" flexDirection="row" paddingBottom={2} paddingLeft={2}>
             <MyBox display="flex" flexDirection="column" flexGrow={1}>
-                <MyBox display="flex" flexDirection="column">
-                    {Object.values(discussions)
-                        .sort((a, b) => {
-                            return a.created_at - b.created_at;
-                        })
-                        .map((discussion) => {
-                            return <DiscussionCard key={discussion.id} discussion={discussion} />;
-                        })}
-                </MyBox>
+                {!collapsedState && (
+                    <MyBox display="flex" flexDirection="column">
+                        {Object.values(discussions)
+                            .sort((a, b) => {
+                                return a.created_at - b.created_at;
+                            })
+                            .map((discussion) => {
+                                return <DiscussionCard key={discussion.id} discussion={discussion} />;
+                            })}
+                    </MyBox>
+                )}
                 {props.blockId === commentsState.anchor && commentsState.isInput && (
                     <MyBox display="flex" flexDirection="column">
                         <MyBox display="flex" flexDirection="row" p={1}>
@@ -126,11 +141,19 @@ const DiscussionList = (props: DiscussionListProps) => {
                     </MyBox>
                 )}
             </MyBox>
-            <MyBox>
-                <MyButton className="levels-btn-collapse" size="small" variant="contained">
-                    Collapse
-                </MyButton>
-            </MyBox>
+
+            {!collapsedState && (
+                <MyBox mt={1}>
+                    <MyButton
+                        className="levels-btn-collapse"
+                        size="small"
+                        variant="contained"
+                        onClick={handleClickCollapse}
+                    >
+                        Collapse
+                    </MyButton>
+                </MyBox>
+            )}
         </MyBox>
     );
 };

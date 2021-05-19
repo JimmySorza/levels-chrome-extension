@@ -7,6 +7,7 @@ import users from './users';
 import comments from './comments';
 import theme from './theme';
 import group from './group';
+import collapse from './collapse';
 
 const { ...emptyInitState } = initialState;
 
@@ -17,6 +18,7 @@ const createAppReducer = (initialState: AppState) => {
         comments,
         theme,
         group,
+        collapse,
     });
 
     return (state = initialState, action: any) => {

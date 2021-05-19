@@ -3,7 +3,8 @@ import { alias } from 'webext-redux';
 import createAppReducer from './rootReducer';
 import thunk from 'redux-thunk';
 import { aliases } from './aliases';
-
+// @ts-ignore
+/* eslint-disable */
 export const createStoreInstance = (preloadedState) => {
     const appReducer = createAppReducer(preloadedState);
 

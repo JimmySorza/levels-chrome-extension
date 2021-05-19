@@ -67,62 +67,69 @@ export const DiscussionList = (props: DiscussionListProps) => {
     }
 
     return (
-        <MyBox display="flex" flexDirection="column" padding={2}>
-            <MyBox display="flex" flexDirection="column">
-                {Object.values(discussions)
-                    .sort((a, b) => {
-                        return a.created_at - b.created_at;
-                    })
-                    .map((discussion) => {
-                        return <DiscussionCard key={discussion.id} discussion={discussion} />;
-                    })}
-            </MyBox>
-            {props.blockId === commentsState.anchor && commentsState.isInput && (
+        <MyBox display="flex" flexDirection="row" paddingBottom={2} paddingLeft={2}>
+            <MyBox display="flex" flexDirection="column" flexGrow={1}>
                 <MyBox display="flex" flexDirection="column">
-                    <MyBox display="flex" flexDirection="row" p={1}>
-                        <Tooltip title={`${userState.given_name} ${userState.family_name}`}>
-                            <Avatar
-                                src={userState.profile_photo}
-                                alt={`${userState.given_name} ${userState.family_name}`}
-                            />
-                        </Tooltip>
-
-                        <MyBox width="10px" />
-                        <textarea
-                            ref={inputRef}
-                            rows={1}
-                            value={commentValue}
-                            onChange={handleChangeComment}
-                            style={{
-                                width: '100%',
-                            }}
-                        />
-                    </MyBox>
-                    <MyBox display="flex" flexDirection="row" justifyContent="flex-end" p={1}>
-                        <MyButton
-                            className="levels-btn-cancel"
-                            variant="contained"
-                            color="secondary"
-                            disableRipple
-                            size="small"
-                            onClick={handleClickCancel}
-                        >
-                            Cancel
-                        </MyButton>
-
-                        <MyButton
-                            size="small"
-                            className="levels-btn-comment"
-                            color="primary"
-                            variant="contained"
-                            disableRipple
-                            onClick={handleClickComment}
-                        >
-                            Comment
-                        </MyButton>
-                    </MyBox>
+                    {Object.values(discussions)
+                        .sort((a, b) => {
+                            return a.created_at - b.created_at;
+                        })
+                        .map((discussion) => {
+                            return <DiscussionCard key={discussion.id} discussion={discussion} />;
+                        })}
                 </MyBox>
-            )}
+                {props.blockId === commentsState.anchor && commentsState.isInput && (
+                    <MyBox display="flex" flexDirection="column">
+                        <MyBox display="flex" flexDirection="row" p={1}>
+                            <Tooltip title={`${userState.given_name} ${userState.family_name}`}>
+                                <Avatar
+                                    src={userState.profile_photo}
+                                    alt={`${userState.given_name} ${userState.family_name}`}
+                                />
+                            </Tooltip>
+
+                            <MyBox width="10px" />
+                            <textarea
+                                ref={inputRef}
+                                rows={1}
+                                value={commentValue}
+                                onChange={handleChangeComment}
+                                style={{
+                                    width: '100%',
+                                }}
+                            />
+                        </MyBox>
+                        <MyBox display="flex" flexDirection="row" justifyContent="flex-end" p={1}>
+                            <MyButton
+                                className="levels-btn-cancel"
+                                variant="contained"
+                                color="secondary"
+                                disableRipple
+                                size="small"
+                                onClick={handleClickCancel}
+                            >
+                                Cancel
+                            </MyButton>
+
+                            <MyButton
+                                size="small"
+                                className="levels-btn-comment"
+                                color="primary"
+                                variant="contained"
+                                disableRipple
+                                onClick={handleClickComment}
+                            >
+                                Comment
+                            </MyButton>
+                        </MyBox>
+                    </MyBox>
+                )}
+            </MyBox>
+            <MyBox>
+                <MyButton className="levels-btn-collapse" size="small" variant="contained">
+                    Collapse
+                </MyButton>
+            </MyBox>
         </MyBox>
     );
 };

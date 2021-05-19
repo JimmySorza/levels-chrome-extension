@@ -37,7 +37,9 @@ $black: rgba(0, 0, 0, 0.9);
         }
 
         .levels-btn-cancel,
-        .levels-btn-comment {
+        .levels-btn-comment,
+        .levels-btn-collapse {
+            text-transform: none;
             color: $white;
         }
     }
@@ -61,7 +63,9 @@ $black: rgba(0, 0, 0, 0.9);
             background-color: $white;
         }
         .levels-btn-cancel,
-        .levels-btn-comment {
+        .levels-btn-comment,
+        .levels-btn-collapse {
+            text-transform: none;
             color: $black;
         }
     }

@@ -1,4 +1,5 @@
 const ESLintPlugin = require('eslint-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const {
     getHTMLPlugins,
     getOutput,
@@ -38,6 +39,14 @@ const generalConfig = {
         ],
     },
     resolve: getResolves(),
+    optimization: {
+        minimize: true,
+        minimizer: [
+            new TerserPlugin({
+                test: /\.js(\?.*)?$/i,
+            }),
+        ],
+    },
 };
 
 const eslintOptions = {

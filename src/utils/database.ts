@@ -22,7 +22,6 @@ export const readUser = async (id: string = ''): Promise<User | { [index: string
 
 export const writeUser = async (user: User): Promise<void> => {
     try {
-        console.log('~~~~~ writing user', user);
         if (!user.id) {
             throw `Could not write user because User Id is Empty!`;
         }
@@ -95,6 +94,29 @@ export const getDiscussionCollapsed = async (
 
         const result = await database.ref(refStr).once('value');
         return result.val();
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const setDiscussionCollapsed = async (
+    userId: string,
+    spaceId: string,
+    blockId: string,
+    status: boolean
+): Promise<void> => {
+    try {
+        if (!userId) {
+            throw `Could not write Collapsed because user Id is Empty!`;
+        }
+        if (!spaceId) {
+            throw `Could not write discussion because space Id is Empty!`;
+        }
+        if (!blockId) {
+            throw `Could not write discussion because block Id is Empty!`;
+        }
+
+        database.ref(`/collapsed/${userId}/${spaceId}/${blockId}`).set(status);
     } catch (error) {
         throw error;
     }

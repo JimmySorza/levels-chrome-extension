@@ -9,6 +9,13 @@ $black: rgba(0, 0, 0, 0.9);
     margin-right: 20px !important;
 }
 
+.levels-btn-collapse {
+    text-transform: none !important;
+    font-size: 12px !important;
+    min-width: 60px !important;
+    width: 60px;
+}
+
 #levels-list-discussion-root {
     textarea {
         border-radius: 5px;
@@ -25,12 +32,19 @@ $black: rgba(0, 0, 0, 0.9);
 #levels-btn-discussion-root {
     width: 0px;
     height: 0px;
-    position: relative;
-    color: #a2a2a1;
+
     svg {
         margin-right: 3px;
-        font-size: 16px;
+        font-size: 15px;
         color: #a2a2a1;
+    }
+
+    span {
+        font-size: 12px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-left: 4px;
     }
 }
 
@@ -57,6 +71,12 @@ $black: rgba(0, 0, 0, 0.9);
             color: $white;
         }
     }
+
+    #levels-btn-discussion-root {
+        span {
+            color: rgba(255, 255, 255, 0.4);
+        }
+    }
 }
 .notion-light-theme {
     // * {
@@ -77,12 +97,18 @@ $black: rgba(0, 0, 0, 0.9);
             background-color: $white;
         }
         .levels-btn-collapse {
-            color: $white;
+            color: $black;
         }
         .levels-btn-cancel,
         .levels-btn-comment {
             text-transform: none;
             color: $black;
+        }
+    }
+
+    #levels-btn-discussion-root {
+        span {
+            color: rgba(55, 53, 47, 0.4);
         }
     }
 }

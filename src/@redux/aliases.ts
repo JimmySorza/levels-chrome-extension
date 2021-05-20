@@ -23,9 +23,9 @@ export const aliases = {
             writeUser(user);
             const comment: Comment = {
                 id: uniqueId(),
-                comment: originalAction.payload,
+                comment: originalAction?.payload?.comment || '',
                 space_id: group?.space_id || '',
-                block_id: comments?.anchor || '',
+                block_id: originalAction?.payload?.block_id || '',
                 user_id: user?.id || '',
                 created_at: Date.now(),
                 updated_at: Date.now(),

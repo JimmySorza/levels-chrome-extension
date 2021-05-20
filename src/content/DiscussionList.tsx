@@ -1,71 +1,28 @@
 import React from 'react';
 import { useStore, useSelector } from 'react-redux';
 import _ from 'lodash';
-import { Avatar, Tooltip } from '@material-ui/core';
 
 import MyBox from 'components/MyBox';
 import MyButton from 'components/MyButton';
 import { AppState, useRedux } from '@redux';
 
-import { setAnchor, setInput, saveComment } from '@redux/comments/actions';
 import DiscussionCard from './DiscussionCard';
+import DiscussionInputBox from './DiscussionInputBox';
 import { BlockComment } from 'types/comment';
 import { saveCollapse } from '@redux/collapse/actions';
-import user from '@redux/user';
 
 export type DiscussionListProps = {
     blockId: string;
 };
 
 const DiscussionList = (props: DiscussionListProps) => {
-    const inputRef = React.useRef<HTMLTextAreaElement>(null);
     const store = useStore();
     const commentsState = useRedux('comments');
     const userState = useRedux('user');
     const groupState = useRedux('group');
     const collapsedState = useSelector((state: AppState) => state.collapse[props.blockId]);
 
-    const [commentValue, setCommentValue] = React.useState('');
     const discussions: BlockComment = _.get(commentsState, `data.${props.blockId}`, {});
-
-    React.useEffect(() => {
-        if (inputRef.current) {
-            inputRef.current.addEventListener(
-                'mousedown',
-                function (e) {
-                    // e.preventDefault();
-                    e.stopPropagation();
-                },
-                false
-            );
-            inputRef.current.addEventListener(
-                'keydown',
-                function (e) {
-                    // e.preventDefault();
-                    e.stopPropagation();
-                },
-                false
-            );
-            inputRef.current.focus();
-        }
-    }, [commentsState.anchor, commentsState.isInput]);
-
-    const handleChangeComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setCommentValue(e.target.value);
-    };
-
-    const handleClickCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
-        setInput(store.dispatch, false);
-        setAnchor(store.dispatch, '');
-        setCommentValue('');
-    };
-
-    const handleClickComment = (e: React.MouseEvent<HTMLButtonElement>) => {
-        saveComment(store.dispatch, commentValue);
-        setInput(store.dispatch, false);
-        setAnchor(store.dispatch, '');
-        setCommentValue('');
-    };
 
     const handleClickCollapse = (e: React.MouseEvent<HTMLButtonElement>) => {
         saveCollapse(store.dispatch, {
@@ -76,7 +33,9 @@ const DiscussionList = (props: DiscussionListProps) => {
         });
     };
 
-    if (props.blockId !== commentsState.anchor && !Object.keys(discussions).length) {
+    const isInitInput = props.blockId === commentsState.anchor && commentsState.isInput;
+
+    if (!isInitInput && (Object.keys(discussions).length === 0 || collapsedState)) {
         return null;
     }
 
@@ -94,56 +53,10 @@ const DiscussionList = (props: DiscussionListProps) => {
                             })}
                     </MyBox>
                 )}
-                {props.blockId === commentsState.anchor && commentsState.isInput && (
-                    <MyBox display="flex" flexDirection="column">
-                        <MyBox display="flex" flexDirection="row" p={1}>
-                            <Tooltip title={`${userState.given_name} ${userState.family_name}`}>
-                                <Avatar
-                                    src={userState.profile_photo}
-                                    alt={`${userState.given_name} ${userState.family_name}`}
-                                />
-                            </Tooltip>
-
-                            <MyBox width="10px" />
-                            <textarea
-                                ref={inputRef}
-                                rows={1}
-                                value={commentValue}
-                                onChange={handleChangeComment}
-                                style={{
-                                    width: '100%',
-                                }}
-                            />
-                        </MyBox>
-                        <MyBox display="flex" flexDirection="row" justifyContent="flex-end" p={1}>
-                            <MyButton
-                                className="levels-btn-cancel"
-                                variant="contained"
-                                color="secondary"
-                                disableRipple
-                                size="small"
-                                onClick={handleClickCancel}
-                            >
-                                Cancel
-                            </MyButton>
-
-                            <MyButton
-                                size="small"
-                                className="levels-btn-comment"
-                                color="primary"
-                                variant="contained"
-                                disableRipple
-                                onClick={handleClickComment}
-                            >
-                                Comment
-                            </MyButton>
-                        </MyBox>
-                    </MyBox>
-                )}
+                {(isInitInput || Object.keys(discussions).length) && <DiscussionInputBox blockId={props.blockId} />}
             </MyBox>
-
-            {!collapsedState && (
-                <MyBox mt={1}>
+            <MyBox mt={1} width="60px">
+                {!collapsedState && !isInitInput && (
                     <MyButton
                         className="levels-btn-collapse"
                         size="small"
@@ -152,8 +65,8 @@ const DiscussionList = (props: DiscussionListProps) => {
                     >
                         Collapse
                     </MyButton>
-                </MyBox>
-            )}
+                )}
+            </MyBox>
         </MyBox>
     );
 };

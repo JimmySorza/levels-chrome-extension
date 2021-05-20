@@ -22,7 +22,7 @@ export const setAnchor = (dispatch: Dispatch<CommentAction>, el: string) => {
     });
 };
 
-export const saveComment = (dispatch: Dispatch<CommentAction>, comment: string) => {
+export const saveComment = (dispatch: Dispatch<CommentAction>, comment: any) => {
     initStore();
     return dispatch({
         type: 'alias@SAVE_COMMENT',

@@ -22,7 +22,9 @@ const DiscussionButton = (props: DiscussionButtonProps) => {
 
     React.useEffect(() => {
         if (buttonRef.current) {
-            setExistComment(Boolean(jquery(buttonRef.current).parent().parent().find('.notion-focusable').length));
+            if (Boolean(jquery(buttonRef.current).parent().parent().find('.notion-focusable').length)) {
+                setExistComment(true);
+            }
             let observer = new MutationObserver(onLoadContent);
             observer.observe(buttonRef.current.parentElement?.parentElement as any, { subtree: true, childList: true });
         }
@@ -67,10 +69,18 @@ const DiscussionButton = (props: DiscussionButtonProps) => {
             onClick={handleClickCollapse}
             style={{
                 cursor: 'pointer',
-                position: 'absolute',
-                top: '5px',
-                fontSize: '13px',
-                left: isExistComment ? '45px' : '10px',
+                userSelect: 'none',
+                transition: 'background 20ms ease-in 0s',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0,
+                borderRadius: '3px',
+                padding: '0px 6px',
+                alignSelf: 'flex-start',
+                marginLeft: isExistComment ? '40px' : '4px',
+                marginTop: '3px',
+                height: '24px',
             }}
         >
             <SmsOutlinedIcon fontSize="small" color="primary" />

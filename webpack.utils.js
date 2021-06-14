@@ -1,41 +1,54 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
-const ZipPlugin = require("zip-webpack-plugin");
-const path = require("path");
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ZipPlugin = require('zip-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const path = require('path');
+const dotenv = require('dotenv').config({ path: __dirname + '/.env' });
 
-const getHTMLPlugins = (browserDir, outputDir = "dev", sourceDir = "src") => [
+const getHTMLPlugins = (browserDir, outputDir = 'dev', sourceDir = 'src') => [
     new HtmlWebpackPlugin({
-        title: "Popup",
+        title: 'Popup',
         filename: path.resolve(__dirname, `${outputDir}/${browserDir}/popup/index.html`),
         template: `${sourceDir}/popup/index.html`,
-        chunks: ["popup"],
+        chunks: ['popup'],
     }),
     new HtmlWebpackPlugin({
-        title: "Options",
+        title: 'Options',
         filename: path.resolve(__dirname, `${outputDir}/${browserDir}/options/index.html`),
         template: `${sourceDir}/options/index.html`,
-        chunks: ["options"],
+        chunks: ['options'],
     }),
 ];
 
-const getOutput = (browserDir, outputDir = "dev") => {
+const getDefinePlugins = (browserDir, outputDir = 'dev', sourceDir = 'src') => [
+    new webpack.DefinePlugin({
+        'process.env.NODE_ENV':
+            outputDir === 'dev'
+                ? JSON.stringify(process.env.NODE_ENV || 'development')
+                : JSON.stringify(process.env.NODE_ENV || 'production'),
+        'process.env': JSON.stringify(dotenv.parsed),
+    }),
+];
+
+const getOutput = (browserDir, outputDir = 'dev') => {
     return {
         path: path.resolve(process.cwd(), `${outputDir}/${browserDir}`),
-        filename: "[name]/[name].js",
+        filename: '[name]/[name].js',
     };
 };
 
-const getEntry = (sourceDir = "src") => {
+const getEntry = (sourceDir = 'src') => {
     return {
-        popup: [path.resolve(__dirname, `${sourceDir}/popup/index.jsx`)],
-        options: [path.resolve(__dirname, `${sourceDir}/options/options.jsx`)],
-        content: [path.resolve(__dirname, `${sourceDir}/content/index.js`)],
-        background: [path.resolve(__dirname, `${sourceDir}/background/index.js`)],
+        popup: [path.resolve(__dirname, `${sourceDir}/popup/index.tsx`)],
+        options: [path.resolve(__dirname, `${sourceDir}/options/options.tsx`)],
+        content: [path.resolve(__dirname, `${sourceDir}/content/index.tsx`)],
+        background: [path.resolve(__dirname, `${sourceDir}/background/index.ts`)],
         hotreload: [path.resolve(__dirname, `${sourceDir}/utils/hot-reload.js`)],
     };
 };
 
-const getCopyPlugins = (browserDir, outputDir = "dev", sourceDir = "src") => [
+const getCopyPlugins = (browserDir, outputDir = 'dev', sourceDir = 'src') => [
     new CopyWebpackPlugin({
         patterns: [
             {
@@ -54,7 +67,7 @@ const getCopyPlugins = (browserDir, outputDir = "dev", sourceDir = "src") => [
     }),
 ];
 
-const getFirefoxCopyPlugins = (browserDir, outputDir = "dev", sourceDir = "src") => [
+const getFirefoxCopyPlugins = (browserDir, outputDir = 'dev', sourceDir = 'src') => [
     new CopyWebpackPlugin({
         patterns: [
             {
@@ -73,11 +86,11 @@ const getFirefoxCopyPlugins = (browserDir, outputDir = "dev", sourceDir = "src")
     }),
 ];
 
-const getZipPlugin = (browserDir, outputDir = "dist") =>
+const getZipPlugin = (browserDir, outputDir = 'dist') =>
     new ZipPlugin({
         path: path.resolve(__dirname, `${outputDir}/${browserDir}`),
         filename: browserDir,
-        extension: "zip",
+        extension: 'zip',
         fileOptions: {
             mtime: new Date(),
             mode: 0o100664,
@@ -89,18 +102,31 @@ const getZipPlugin = (browserDir, outputDir = "dist") =>
         },
     });
 
+const getAnalyzerPlugin = (browserDir, outputDir = 'dist') => {
+    return [
+        new BundleAnalyzerPlugin({
+            analyzerMode: 'static',
+            generateStatsFile: true,
+            statsFilename: `/${outputDir}/${browserDir}.html`,
+        }),
+    ];
+};
+
 const getResolves = () => {
     return {
         alias: {
-            utils: path.resolve(__dirname, "./src/utils/"),
-            popup: path.resolve(__dirname, "./src/popup/"),
-            background: path.resolve(__dirname, "./src/background/"),
-            options: path.resolve(__dirname, "./src/options/"),
-            content: path.resolve(__dirname, "./src/content/"),
-            assets: path.resolve(__dirname, "./src/assets/"),
-            components: path.resolve(__dirname, "./src/components/"),
+            utils: path.resolve(__dirname, './src/utils/'),
+            popup: path.resolve(__dirname, './src/popup/'),
+            background: path.resolve(__dirname, './src/background/'),
+            options: path.resolve(__dirname, './src/options/'),
+            content: path.resolve(__dirname, './src/content/'),
+            assets: path.resolve(__dirname, './src/assets/'),
+            components: path.resolve(__dirname, './src/components/'),
+            types: path.resolve(__dirname, './src/types/'),
+            hooks: path.resolve(__dirname, './src/hooks/'),
+            '@redux': path.resolve(__dirname, './src/@redux/'),
         },
-        extensions: [".js", ".jsx", ".ts", ".tsx"],
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
     };
 };
 
@@ -112,4 +138,6 @@ module.exports = {
     getZipPlugin,
     getEntry,
     getResolves,
+    getDefinePlugins,
+    getAnalyzerPlugin,
 };

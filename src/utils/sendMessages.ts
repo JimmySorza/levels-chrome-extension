@@ -1,29 +1,20 @@
-import ext from "./ext";
-
-export type MSG_TYPE = "AUTH" | "COMMENT";
+import { browser, Runtime, Tabs } from 'webextension-polyfill-ts';
+import { Message } from 'types/message';
+import { Response } from 'types/response';
 
 /**
+ * Send Message to Background Script
  *
- * @param msgType
- * @param message
+ * @param msg
  * @returns
  */
-export const sendMessage = async (msgType: MSG_TYPE, message: any): Promise<any> => {
-    const msg = {
-        msgType,
-        ...message,
-    };
-    console.log("===== Sending Message => ", msg);
-    return new Promise((resolve, reject) => {
-        try {
-            ext.runtime.sendMessage(msg, (response: any) => {
-                resolve(response);
-            });
-        } catch (e) {
-            console.log(" SendMessage Failed => ", e);
-            reject(e);
-        }
-    });
+export const sendMessage = (msg: Message, options?: Runtime.SendMessageOptionsType): Promise<Response> => {
+    return browser.runtime.sendMessage(msg, options);
 };
 
-export default sendMessage;
+/**
+ * Send Message to Content Script
+ */
+export const sendMessageWithTab = (tab: Tabs.Tab, msg: Message, options?: Tabs.SendMessageOptionsType) => {
+    return browser.tabs.sendMessage(tab.id as number, msg, options);
+};

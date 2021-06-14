@@ -1,8 +1,17 @@
-import ext from "utils/ext";
+import { browser, Runtime, Tabs } from 'webextension-polyfill-ts';
+import { wrapStore } from 'webext-redux';
+
+import { Message } from 'types/message';
+import { SpaceBlockComment } from 'types/comment';
+import { User } from 'types/user';
+import store from '@redux/createStore';
+import { AppState } from '@redux';
+import { watchDiscussion, watchUsers } from 'utils/database';
+
+wrapStore(store);
 
 /**
- * Define content script functions
- * @type {class}
+ * Define Background script functions
  */
 class Background {
     constructor() {
@@ -14,22 +23,14 @@ class Background {
      * @returns {void}
      */
     init = () => {
-        console.log("loaded Background Scripts");
+        console.log('[=====Loaded Background Scripts=====]');
 
         //When extension installed
-        ext.runtime.onInstalled.addListener(() => this.onInstalled());
+        browser.runtime.onInstalled.addListener(this.onInstalled);
 
         //Add message listener in Browser.
-        ext.runtime.onMessage.addListener((message, sender, reply) => this.onMessage(message, sender, reply));
-
-        //Add message listener from Extension
-        ext.extension.onConnect.addListener((port) => this.onConnect(port));
-
-        //Add Update listener for tab
-        ext.tabs.onUpdated.addListener((tabId, changeInfo, tab) => this.onUpdatedTab(tabId, changeInfo, tab));
-
-        //Add New tab create listener
-        ext.tabs.onCreated.addListener((tab) => this.onCreatedTab(tab));
+        // @ts-ignore
+        browser.runtime.onMessage.addListener(this.onMessage);
     };
 
     //TODO: Listeners
@@ -38,130 +39,63 @@ class Background {
      * Extension Installed
      */
     onInstalled = () => {
-        console.log("~~~~~Installed Extension!");
+        console.log('[=====Installed Levels Extension=====]');
     };
 
     /**
-     * Message Handler Function
+     * Message Handler Function from content script and popup page
      *
-     * @param { object } message
-     * @param { object } sender
-     * @param { object } reply
+     * @param message
+     * @param sender
+     * @param reply
+     * @returns
      */
-    onMessage = (message, sender, reply) => {
-        console.log("~~~~~Received message", message);
+    onMessage = (message: Message, sender: Runtime.MessageSender, reply: Function) => {
+        console.log('[=====Received Message=====]', sender, message);
         switch (message.type) {
+            case 'ACTIVE_PAGE_ACTION': {
+                browser.pageAction.show(sender.tab?.id || 0);
+                this.setupWatchData();
+                break;
+            }
         }
         return true;
     };
 
     /**
-     * Connect with Extension
-     *
-     * @param {*} port
-     */
-    onConnect = (port) => {
-        this._port = port;
-        console.log("~~~~~Connected .....");
-        this._port.onMessage.addListener((msg) => this.onMessageFromExtension(msg));
-    };
-
-    /**
-     * Message from Extension
-     *
-     * @param {*} msg
-     */
-    onMessageFromExtension = (msg) => {
-        console.log("~~~~Recieved message from Popup:" + msg);
-    };
-
-    /**
-     *
-     * @param {object} tab
-     */
-    onCreatedTab = (tab) => {
-        console.log("~~~~~Created new tab", tab);
-    };
-
-    /**
-     * When changes tabs
-     *
-     * @param {*} tabId
-     * @param {*} changeInfo
-     * @param {*} tab
-     */
-    onUpdatedTab = (tabId, changeInfo, tab) => {
-        console.log("~~~~~Changed tab", tabId);
-    };
-
-    /**
-     * get url from tab
-     * @param {number} tabid
-     */
-    getURLFromTab = (tabid) => {
-        return new Promise(function (resolve, reject) {
-            ext.tabs.get(tabid, function (tab) {
-                resolve(tab.url ? tab.url : "");
-            });
-        });
-    };
-
-    /**
-     * open new tab
-     *
-     * @param {string} url
-     */
-    openNewTab = (url) => {
-        return new Promise((resolve, reject) =>
-            ext.tabs.create({ url }, function (tab) {
-                resolve(tab);
-            })
-        );
-    };
-
-    /**
-     * Close specific tab
-     * @param {} tab
-     */
-    closeTab = (tab) => {
-        return new Promise((resolve, reject) =>
-            ext.tabs.remove(tab.id, () => {
-                resolve();
-            })
-        );
-    };
-
-    /**
-     * Update Tab
-     */
-    updateTab = (tab, options) => {
-        return new Promise((resolve, reject) => {
-            ext.tabs.update(tab.id, options, function (updateTab) {
-                resolve(updateTab);
-            });
-        });
-    };
-
-    /**
-     * Get info from tabId
-     */
-    getTab = (tab) => {
-        return new Promise((resolve) => {
-            ext.tabs.get(tab.id, function (newTab) {
-                resolve(newTab);
-            });
-        });
-    };
-
-    /**
      * send message
      */
-    sendMessage = (tab, msg) => {
+    sendMessage = (tab: Tabs.Tab, msg: Message) => {
         return new Promise((resolve, reject) =>
-            ext.tabs.sendMessage(tab.id, msg, function (response) {
+            // @ts-ignore
+            browser.tabs.sendMessage(tab.id as number, msg, (response: Message) => {
                 resolve(response);
             })
         );
+    };
+
+    setupWatchData = () => {
+        // check users change
+        watchUsers(this.onChangeUsers);
+
+        // check comments change
+        const { group } = store.getState() as AppState;
+        if (group.space_id) {
+            watchDiscussion(group.space_id, this.onChangeComments);
+        }
+    };
+
+    onChangeComments = (comments: SpaceBlockComment) => {
+        store.dispatch({
+            type: 'SET_COMMENT',
+            payload: comments,
+        });
+    };
+    onChangeUsers = (users: { [index: string]: User }) => {
+        store.dispatch({
+            type: 'SET_ALL_USER',
+            payload: users,
+        });
     };
 }
 

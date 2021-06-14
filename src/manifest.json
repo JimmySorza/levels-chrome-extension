@@ -13,24 +13,26 @@
     "default_locale": "en",
     "content_scripts": [
         {
-            "matches": ["http://*/*", "https://*/*"],
-            "js": ["content/content.js"]
+            "matches": ["http://*.notion.so/*", "https://*.notion.so/*"],
+            "js": ["content/content.js"],
+            "run_at": "document_end"
         }
     ],
     "background": {
         "scripts": ["background/background.js", "hotreload/hotreload.js"],
         "persistent": true
     },
-    "permissions": ["tabs", "storage", "http://*/*", "https://*/*"],
+    "permissions": ["http://*.notion.so/*", "https://*.notion.so/*"],
     "options_ui": {
         "page": "options/index.html"
     },
-    "browser_action": {
+    "page_action": {
         "default_icon": {
             "16": "assets/icons/icon-16.png",
             "48": "assets/icons/icon-48.png"
         },
         "default_title": "Levels Comment Extension",
         "default_popup": "popup/index.html"
-    }
+    },
+    "content_security_policy": "script-src 'self' https://*.firebaseio.com; object-src 'self'"
 }
